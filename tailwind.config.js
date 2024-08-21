@@ -1,18 +1,29 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        white: '#FEFFFE', // Blanco Piruli
+        black: '#000000', // Negro
+        red: '#FF0000', // Rojo Metro
+        green: '#2e932e', // Verde Pinos
+        teal: '#60C6B4', // Turquesa Dragon
+        gray: {
+          light: '#d7d2ca', // Gris Piruli Claro
+          DEFAULT: '#3D3D3D', // Gris Piruli Oscuro
+        },
+        ivory: '#fdfcf7', // Piruli Marfil
+        maroon: '#C31A26', // Rojo CAM
+      },
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
       },
     },
   },
   plugins: [],
-};
+}
