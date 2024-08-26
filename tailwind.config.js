@@ -1,16 +1,28 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',  // Activa el modo oscuro basado en la clase
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/**/*.{js,ts,jsx,tsx}', // Asegúrate de incluir todos los archivos de src
+    './components/**/*.{js,ts,jsx,tsx}', // Incluye todos los archivos de components
+    './pages/**/*.{js,ts,jsx,tsx}', // Incluye todos los archivos de pages (en src)
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        white: '#FEFFFE', 
+        black: '#000000', 
+        red: '#FF0000', 
+        green: '#2e932e', 
+        teal: '#60C6B4',
+        gray: {
+          light: '#d7d2ca', 
+          DEFAULT: '#3D3D3D',
+        },
+        ivory: '#fdfcf7', 
+        maroon: '#C31A26',
+      },
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
       },
     },
   },
