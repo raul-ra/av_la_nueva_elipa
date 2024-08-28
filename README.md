@@ -146,4 +146,4 @@ export default App;
 
 1. **Tiempo de Inactividad**: El menú de escritorio se cierra automáticamente después de un breve periodo de inactividad si el ratón no está interactuando con él.
 2. **Responsividad**: El componente está completamente optimizado para ser responsivo, adaptándose automáticamente al ancho de la pantalla.
-3. **Accesibilidad**: Cada enlace y botón dentro del menú y submenús puede ser navegable mediante teclado, facilitando la accesibilidad.
+3. **Accesibilidad**: Cada enlace y botón dentro del menú y submenús puede ser navegable mediante teclado, facilitando la accesibilidad.git log --merges
