@@ -16,13 +16,20 @@ module.exports = {
         teal: '#60C6B4',
         gray: {
           light: '#d7d2ca', 
-          DEFAULT: '#3D3D3D',
+          dark: '#3D3D3D', 
+          800: '#2D2D2D',
         },
         ivory: '#fdfcf7', 
         maroon: '#C31A26',
       },
       fontFamily: {
         montserrat: ['Montserrat', 'sans-serif'],
+      },
+      fontWeight: {
+        semibold: 600, // Añadir font-semibold como semibold
+      },
+      fontSize: {
+        'lg': '1.125rem', // 18px
       },
     },
   },
