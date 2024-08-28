@@ -147,3 +147,100 @@ export default App;
 1. **Tiempo de Inactividad**: El menú de escritorio se cierra automáticamente después de un breve periodo de inactividad si el ratón no está interactuando con él.
 2. **Responsividad**: El componente está completamente optimizado para ser responsivo, adaptándose automáticamente al ancho de la pantalla.
 3. **Accesibilidad**: Cada enlace y botón dentro del menú y submenús puede ser navegable mediante teclado, facilitando la accesibilidad.git log --merges
+
+
+# Componente UnderConstruction
+
+El componente `UnderConstruction` es un componente de React reutilizable diseñado para mostrar un mensaje de "Página en Construcción". Cuenta con un icono animado opcional, un título de página personalizable y un mensaje amigable para informar a los usuarios que la página a la que intentan acceder aún no está disponible.
+
+## Características
+
+- Muestra un mensaje de "Página en Construcción" con un título de página personalizable.
+- Incluye una animación opcional de Lottie para retroalimentación visual.
+- Simple y fácil de integrar en cualquier proyecto de Next.js.
+- Componente totalmente del lado del cliente, aprovechando los hooks de React como `useState` y `useEffect`.
+
+## Instalación
+
+1. Asegúrate de tener `react-lottie` instalado en tu proyecto. Si no es así, instálalo usando npm o yarn:
+
+   ```bash
+   npm install react-lottie
+   ```
+
+   o
+
+   ```bash
+   yarn add react-lottie
+   ```
+
+2. Coloca el componente `UnderConstruction` en el directorio apropiado dentro de tu proyecto:
+
+   ```plaintext
+   src/
+   └── components/
+       └── underConstruccion/
+           └── page.jsx
+   ```
+
+3. Añade el archivo de animación Lottie `workinprogress.json` a tu directorio `public/icons/`:
+
+   ```plaintext
+   public/
+   └── icons/
+       └── workinprogress.json
+   ```
+
+## Uso
+
+Para usar el componente `UnderConstruction` en una página, simplemente impórtalo y pasa la prop `pageName` para personalizar el título mostrado:
+
+```javascript
+import UnderConstruction from "../../components/underConstruccion/page";
+
+export default function HistoriaDeLaAsociacion() {
+    return <UnderConstruction pageName="Historia de la Asociación" />;
+}
+```
+
+### Props
+
+- `pageName` (string): El nombre de la página que se va a mostrar. Esta prop es obligatoria.
+
+## Ejemplo
+
+```javascript
+import UnderConstruction from "../../components/underConstruccion/page";
+
+export default function HuertoUrbano() {
+    return <UnderConstruction pageName="Huerto Urbano" />;
+}
+```
+
+En este ejemplo, el componente `UnderConstruction` mostrará un mensaje de "Página en Construcción" con el título "Huerto Urbano" y un icono animado.
+
+## Personalización
+
+### Estilo CSS
+
+El componente está estilizado usando estilos en línea. Si deseas personalizar los estilos, puedes modificar los objetos `style` dentro del componente o aplicar clases CSS externas.
+
+### Animación de Lottie
+
+El componente utiliza el paquete `react-lottie` para renderizar la animación. Puedes reemplazar el archivo `workinprogress.json` con cualquier otro archivo JSON de Lottie para personalizar la animación mostrada.
+
+## Solución de Problemas
+
+### Problemas Comunes
+
+1. **El Componente No se Renderiza:**
+   - Asegúrate de que el componente `UnderConstruction` esté importado correctamente y que la ruta del archivo sea precisa.
+   - Asegúrate de que la directiva `use client`; esté presente en la parte superior del archivo del componente para garantizar que se ejecute del lado del cliente.
+
+2. **La Animación de Lottie No se Carga:**
+   - Verifica que el archivo `workinprogress.json` esté presente en el directorio `public/icons/`.
+   - Asegúrate de que la URL de `fetch` en el hook `useEffect` sea correcta.
+
+## Licencia
+
+Este componente es de código abierto y está disponible bajo la [Licencia MIT](LICENSE).

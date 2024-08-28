@@ -1,3 +1,5 @@
+// app/huertourbano/page.js
+
 import React from 'react';
 import "./globals.css";
 import { ThemeProvider } from 'next-themes'; // Importar ThemeProvider para manejo de temas
@@ -13,7 +15,7 @@ export default function RootLayout({ children }) {
       <head>
         {/* Puedes añadir más metadatos aquí si es necesario */}
       </head>
-      <body className={`${montserrat.className} bg-white dark:bg-gray-900`}>
+      <body className={`${montserrat.className} bg-white`}>
         {/* Envolvemos todo en el ThemeProvider para el cambio de tema */}
         <ThemeProvider attribute="class">
           {/* Incluimos el Header */}

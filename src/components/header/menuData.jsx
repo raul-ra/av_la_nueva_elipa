@@ -6,8 +6,8 @@ export const menuData = [
     {
         title: 'Quienes Somos',
         subMenu: [
-            { title: 'Historia de la Asociación', link: '/historia' },
-            { title: 'Nuestra Misión', link: '/mision' },
+            { title: 'Historia de la Asociación', link: '/historialealasociacion' },
+            { title: 'Nuestra Misión', link: '/nuestramision' },
             { title: 'Organigrama', link: '/organigrama' },
         ],
     },
@@ -15,30 +15,30 @@ export const menuData = [
         title: 'Qué Hacemos',
         subMenu: [
             { title: 'Mediación', link: '/mediacion' },
-            { title: 'Cursos y Talleres', link: '/cursos-talleres' },
-            { title: 'Huerto Urbano', link: '/huerto-urbano' },
-            { title: 'Grupo Scout Atreyu', link: '/grupo-scout' },
-            { title: "Campamento de Verano 'El Escondite'", link: '/campamento' },
+            { title: 'Cursos y Talleres', link: '/cursosytalleres' },
+            { title: 'Huerto Urbano', link: '/huertourbano' },
+            { title: 'Grupo Scout Atreyu', link: '/gruposcoutatreyu' },
+            { title: "Campamento de Verano 'El Escondite'", link: '/campamentodeverano' },
             {
                 title: 'Espacio Comunitario',
                 subMenu: [
-                    { title: 'Grupo de Consumo Ecológico', link: '/grupo-consumo' },
-                    { title: 'Grupo Felicidad', link: '/grupo-felicidad' },
-                    { title: 'Club de Ajedrez', link: '/club-ajedrez' },
+                    { title: 'Grupo de Consumo Ecológico', link: '/grupodeconsumoecologico' },
+                    { title: 'Grupo Felicidad', link: '/grupofelicidad' },
+                    { title: 'Club de Ajedrez', link: '/clubdeajedrez' },
                 ],
             },
             {
                 title: 'Dinamización Social y Cultural',
                 subMenu: [
-                    { title: 'Elipa Rock', link: '/elipa-rock' },
-                    { title: 'Cross Salvar el Pinar', link: '/cross-salvar' },
-                    { title: 'Carrera Popular', link: '/carrera-popular' },
+                    { title: 'Elipa Rock', link: '/eliparock' },
+                    { title: 'Cross Salvar el Pinar', link: '/crosspinar' },
+                    { title: 'Carrera Popular', link: '/carrerapopular' },
                 ],
             },
         ],
     },
     {
         title: 'Hazte Socio',
-        link: '/hazte-socio', // Link correctamente definido
+        link: '/haztesocio', // Link correctamente definido
     },
 ];
