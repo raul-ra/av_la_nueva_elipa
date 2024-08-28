@@ -7,20 +7,27 @@ Este proyecto incluye un componente `Header` diseñado para funcionar tanto en d
 ### Estructura
 
 El `Header` está estructurado en dos partes principales:
-1. **Menú de Escritorio**: Visible cuando el ancho de la pantalla es mayor o igual a 1024px. Los menús y submenús se abren al pasar el ratón por encima y se cierran automáticamente después de 5 segundos sin interacción.
+
+1. **Menú de Escritorio**: Visible cuando el ancho de la pantalla es mayor o igual a 1024px. Los menús y submenús se abren al pasar el ratón por encima y se cierran automáticamente si no hay interacción.
 2. **Menú Móvil ("Hamburger Menu")**: Visible cuando el ancho de la pantalla es menor a 1024px. Los menús y submenús se abren y cierran mediante clics en los botones correspondientes.
 
 ### Lógica de Menús y Submenús
 
 #### Escritorio
+
 - Los menús se abren al pasar el ratón por encima de un elemento de menú principal que tenga submenús.
 - Los submenús también se abren al hacer hover sobre el elemento correspondiente.
 - Se ha implementado un temporizador que cierra el menú y los submenús después de 5 segundos sin interacción con ellos (es decir, cuando el ratón sale completamente del área de los menús).
 
 #### Móvil
+
 - El menú principal se alterna (abrir/cerrar) mediante un botón de "hamburguesa".
 - Al hacer clic en un elemento de menú principal que tenga submenús, estos se despliegan.
 - Los submenús también se pueden abrir y cerrar mediante clics.
+
+### index.jsx
+
+El archivo `index.jsx` implementa el `Header` utilizando los datos proporcionados por `menuData.jsx`. Este archivo maneja la lógica para la versión móvil y de escritorio del menú.
 
 ### `menuData.jsx`
 
@@ -83,17 +90,34 @@ Por ejemplo:
 - Si un elemento en `menuData` tiene un `subMenu`, el `Header` renderizará ese elemento como un menú desplegable.
 - Los submenús pueden contener enlaces adicionales que también se renderizan dinámicamente.
 
-## Funciones Clave
+### Detección del Tipo de Dispositivo
 
-- **`handleMouseOver`**: Abre el menú cuando el ratón pasa por encima de un elemento de menú principal (solo en escritorio).
-- **`handleMouseOut`**: Inicia el temporizador de 5 segundos para cerrar el menú cuando el ratón sale del área del menú.
-- **`clearExistingTimeout`**: Cancela cualquier temporizador activo para prevenir el cierre automático del menú mientras el ratón sigue interactuando con el mismo.
-- **`toggleMenu` y `toggleSubMenu`**: Controlan la apertura y cierre de menús y submenús en la vista móvil mediante clics.
+Se usa `useState` y `useEffect` para determinar si el dispositivo es móvil o de escritorio, cambiando el comportamiento del menú en consecuencia.
 
-## Requerimientos
+### Control de Apertura y Cierre del Menú (Versión Móvil)
 
-- **React**: El componente `Header` está construido utilizando React y maneja el estado interno mediante hooks como `useState` y `useEffect`.
-- **Tailwind CSS**: Se utiliza para el diseño y la disposición de los elementos, incluyendo estilos responsivos para el menú móvil y de escritorio.
+- **`toggleMenu`**: Alterna entre abrir y cerrar el menú principal cuando se hace clic en el botón de "hamburguesa".
+- **`toggleSubMenu`**: Abre o cierra un submenú específico cuando se hace clic en un elemento de menú principal.
+- **`toggleSubSubMenu`**: Abre o cierra los sub-submenús anidados dentro de un submenú.
+
+### Control de Apertura y Cierre del Menú (Versión Escritorio)
+
+- **`handleMouseEnterMenu`** y **`handleMouseLeaveMenu`**: Abren y cierran los menús principales cuando el ratón pasa por encima o sale de un elemento del menú.
+- **`handleMouseEnterSubMenu`** y **`handleMouseLeaveSubMenu`**: Manejan el comportamiento de los submenús de la misma manera que los menús principales.
+
+### Transiciones y Animaciones
+
+- Cuando el menú móvil se abre, el segundo logo (`logoAvLaNuevaElipaBlack.svg`) se reemplaza por un logo más pequeño (`avLaNuevaElipaShortBlack.svg`) para acomodar el espacio adicional ocupado por el menú.
+- Las transiciones entre estos dos logos se manejan utilizando `className` y estilos CSS como `transition-transform`.
+
+### Tiempo de Espera para Cerrar Menús
+
+En la versión de escritorio, se implementa un temporizador (mediante `setTimeout`) que espera unos 200 milisegundos antes de cerrar los menús para evitar cierres inesperados mientras el usuario está navegando por los menús.
+
+## Interacción entre Archivos
+
+- **`menuData.jsx`**: Define la estructura de los menús y submenús que se van a renderizar.
+- **`index.jsx`**: Usa los datos de `menuData.jsx` para renderizar dinámicamente los menús y submenús tanto en la vista móvil como en la de escritorio. Aquí también se implementa toda la lógica para la interacción del usuario con el menú.
 
 ## Personalización
 
@@ -120,6 +144,6 @@ export default App;
 
 ## Consideraciones
 
-1. **Tiempo de Inactividad**: El temporizador de 5 segundos para cerrar los menús se reinicia siempre que haya interacción, por lo que los menús solo se cierran cuando el ratón deja de interactuar completamente.
+1. **Tiempo de Inactividad**: El menú de escritorio se cierra automáticamente después de un breve periodo de inactividad si el ratón no está interactuando con él.
 2. **Responsividad**: El componente está completamente optimizado para ser responsivo, adaptándose automáticamente al ancho de la pantalla.
 3. **Accesibilidad**: Cada enlace y botón dentro del menú y submenús puede ser navegable mediante teclado, facilitando la accesibilidad.
