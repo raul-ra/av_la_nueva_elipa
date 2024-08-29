@@ -6,7 +6,7 @@ export const menuData = [
     {
         title: 'Quienes Somos',
         subMenu: [
-            { title: 'Historia de la Asociación', link: '/historialealasociacion' },
+            { title: 'Historia de la Asociación', link: '/historiadelaasociacion' },
             { title: 'Nuestra Misión', link: '/nuestramision' },
             { title: 'Organigrama', link: '/organigrama' },
         ],

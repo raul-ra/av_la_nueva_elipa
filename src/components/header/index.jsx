@@ -82,12 +82,19 @@ const Header = () => {
         setOpenSubSubMenuIndex(openSubSubMenuIndex === index ? null : index);
     };
 
+    // Lógica para cerrar el menú móvil al hacer clic en un enlace
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+        setOpenSubMenuIndex(null);
+        setOpenSubSubMenuIndex(null);
+    };
+
     return (
         <header className="bg-white shadow-md relative z-10">
             <div className="container mx-auto flex justify-between items-center p-4">
                 {/* Logos a la izquierda */}
                 <div className="flex items-center space-x-4">
-                    <Link href="/">
+                    <Link href="/" onClick={closeMenu}>
                         <Image
                             src="/logos/logoDragonTeal.svg"
                             alt="Logo Dragon Teal"
@@ -95,7 +102,7 @@ const Header = () => {
                             height={60}
                         />
                     </Link>
-                    <Link href="/">
+                    <Link href="/" onClick={closeMenu}>
                         <Image
                             src={isMenuOpen ? "/logos/avLaNuevaElipaShortBlack.svg" : "/logos/logoAvLaNuevaElipaBlack.svg"}
                             alt="Logo Av La Nueva Elipa"
@@ -212,44 +219,66 @@ const Header = () => {
                         <ul className="space-y-4">
                             {menuData.map((item, index) => (
                                 <li key={index} className="relative">
-                                    {/* Enlace principal con clic para abrir submenús */}
-                                    <button
-                                        onClick={() => toggleSubMenu(index)}
-                                        className="text-gray-700 block hover:bg-teal hover:text-white px-4 py-2 w-full text-left rounded"
-                                    >
-                                        {item.title}
-                                    </button>
-
-                                    {/* Submenús en móvil */}
-                                    {item.subMenu && openSubMenuIndex === index && (
-                                        <ul className="pl-4">
-                                            {item.subMenu.map((subItem, subIndex) => (
-                                                <li key={subIndex}>
-                                                    <button
-                                                        onClick={() => toggleSubSubMenu(`${index}-${subIndex}`)}
-                                                        className="text-gray-600 block hover:bg-teal hover:text-white px-4 py-2 w-full text-left rounded"
-                                                    >
-                                                        {subItem.title}
-                                                    </button>
-                                                    {subItem.subMenu && openSubSubMenuIndex === `${index}-${subIndex}` && (
-                                                        <ul className="pl-4">
-                                                            {subItem.subMenu.map(
-                                                                (nestedItem, nestedIndex) => (
-                                                                    <li key={nestedIndex}>
-                                                                        <Link
-                                                                            href={nestedItem.link || "#"}
-                                                                            className="text-gray-500 block hover:bg-teal hover:text-white px-4 py-2 rounded"
-                                                                        >
-                                                                            {nestedItem.title}
-                                                                        </Link>
-                                                                    </li>
-                                                                )
+                                    {item.subMenu ? (
+                                        <>
+                                            <button
+                                                onClick={() => toggleSubMenu(index)}
+                                                className="text-gray-700 block hover:bg-teal hover:text-white px-4 py-2 w-full text-left rounded"
+                                            >
+                                                {item.title}
+                                            </button>
+                                            {openSubMenuIndex === index && (
+                                                <ul className="pl-4">
+                                                    {item.subMenu.map((subItem, subIndex) => (
+                                                        <li key={subIndex}>
+                                                            {subItem.subMenu ? (
+                                                                <>
+                                                                    <button
+                                                                        onClick={() => toggleSubSubMenu(`${index}-${subIndex}`)}
+                                                                        className="text-gray-600 block hover:bg-teal hover:text-white px-4 py-2 w-full text-left rounded"
+                                                                    >
+                                                                        {subItem.title}
+                                                                    </button>
+                                                                    {openSubSubMenuIndex === `${index}-${subIndex}` && (
+                                                                        <ul className="pl-4">
+                                                                            {subItem.subMenu.map(
+                                                                                (nestedItem, nestedIndex) => (
+                                                                                    <li key={nestedIndex}>
+                                                                                        <Link
+                                                                                            href={nestedItem.link || "#"}
+                                                                                            className="text-gray-500 block hover:bg-teal hover:text-white px-4 py-2 rounded"
+                                                                                            onClick={closeMenu} // Cierra el menú móvil al hacer clic en un enlace
+                                                                                        >
+                                                                                            {nestedItem.title}
+                                                                                        </Link>
+                                                                                    </li>
+                                                                                )
+                                                                            )}
+                                                                        </ul>
+                                                                    )}
+                                                                </>
+                                                            ) : (
+                                                                <Link
+                                                                    href={subItem.link || "#"}
+                                                                    className="text-gray-600 block hover:bg-teal hover:text-white px-4 py-2 w-full text-left rounded"
+                                                                    onClick={closeMenu} // Cierra el menú móvil al hacer clic en un enlace
+                                                                >
+                                                                    {subItem.title}
+                                                                </Link>
                                                             )}
-                                                        </ul>
-                                                    )}
-                                                </li>
-                                            ))}
-                                        </ul>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <Link
+                                            href={item.link || "#"}
+                                            className="text-gray-700 block hover:bg-teal hover:text-white px-4 py-2 w-full text-left rounded"
+                                            onClick={closeMenu} // Cierra el menú móvil al hacer clic en un enlace
+                                        >
+                                            {item.title}
+                                        </Link>
                                     )}
                                 </li>
                             ))}
