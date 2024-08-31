@@ -271,6 +271,116 @@ El componente utiliza el paquete `react-lottie` para renderizar la animación. P
    - Verifica que el archivo `workinprogress.json` esté presente en el directorio `public/icons/`.
    - Asegúrate de que la URL de `fetch` en el hook `useEffect` sea correcta.
 
-## Licencia
 
-Este componente es de código abierto y está disponible bajo la [Licencia MIT](LICENSE).
+# Componente CookieConsentModal
+
+El componente `CookieConsentModal` es una implementación en React que muestra un aviso modal para que los usuarios acepten o rechacen el uso de cookies en el sitio web. Este componente está diseñado para ser utilizado en proyectos desarrollados con Next.js y Tailwind CSS.
+
+## Propósito
+
+El propósito del componente `CookieConsentModal` es cumplir con las normativas de privacidad y protección de datos, proporcionando a los usuarios la opción de aceptar o rechazar las cookies utilizadas en el sitio web. Este componente se muestra automáticamente cuando el usuario visita el sitio por primera vez o si no ha aceptado previamente las cookies.
+
+## Características
+
+- **Modal de Consentimiento**: Muestra una ventana modal cuando el usuario visita el sitio por primera vez y no ha dado su consentimiento para el uso de cookies.
+- **Almacenamiento en LocalStorage**: El estado de consentimiento se almacena en `localStorage` para recordar la elección del usuario en visitas posteriores.
+- **Botón de Aceptar**: Permite al usuario aceptar el uso de cookies.
+- **Botón de Cancelar**: Permite al usuario rechazar el uso de cookies.
+- **Enlace a Política de Cookies**: Incluye un enlace para que el usuario pueda leer la política de cookies completa.
+
+## Uso
+
+### Instalación
+
+Primero, asegúrate de tener el entorno de desarrollo configurado con `Next.js` y `Tailwind CSS`.
+
+### Integración en el Proyecto
+
+1. **Crear el Componente**
+
+   Crea un archivo `CookieConsentModal.jsx` en el directorio `components/cookieModal/` y añade el siguiente código:
+
+   ```jsx
+   "use client";
+
+   import { useState, useEffect } from 'react';
+
+   const CookieConsentModal = () => {
+       const [isOpen, setIsOpen] = useState(false);
+
+       useEffect(() => {
+           const cookieConsent = localStorage.getItem('cookieConsent');
+           if (!cookieConsent) {
+               setIsOpen(true);
+           }
+       }, []);
+
+       const handleAccept = () => {
+           localStorage.setItem('cookieConsent', 'true');
+           setIsOpen(false);
+       };
+
+       const handleDecline = () => {
+           localStorage.setItem('cookieConsent', 'false');
+           setIsOpen(false);
+       };
+
+       if (!isOpen) return null;
+
+       return (
+           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+               <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+                   <h2 className="text-xl font-semibold mb-4 text-black">Usamos cookies</h2>
+                   <p className="mb-4 text-gray-800">
+                       Este sitio web utiliza cookies para mejorar la experiencia del usuario. Para más información, por favor visita nuestra 
+                       <a href="/politica-de-cookies" className="text-teal hover:underline ml-1">
+                           Política de Cookies
+                       </a>.
+                   </p>
+                   <div className="flex justify-end space-x-4">
+                       <button
+                           onClick={handleDecline}
+                           className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 focus:outline-none"
+                       >
+                           Cancelar
+                       </button>
+                       <button
+                           onClick={handleAccept}
+                           className="bg-teal text-white px-4 py-2 rounded-lg hover:bg-teal-600 focus:outline-none"
+                       >
+                           Aceptar
+                       </button>
+                   </div>
+               </div>
+           </div>
+       );
+   };
+
+   export default CookieConsentModal;
+```
+
+2 **Integrar el Componente en el Layout Principal**
+
+```jsx
+import CookieConsentModal from '../components/cookieModal/CookieConsentModal';
+
+export default function RootLayout({ children }) {
+    return (
+        <html lang="es">
+            <head></head>
+            <body className="bg-white">
+                <Header />
+                <CookieConsentModal />
+                <main>{children}</main>
+            </body>
+        </html>
+    );
+}
+```
+
+### Personalización
+
+Puedes personalizar los estilos y el contenido de la modal ajustando las clases de Tailwind CSS o el texto dentro del componente CookieConsentModal.
+
+- **Estilos**: Los estilos están basados en Tailwind CSS, lo que facilita su personalización cambiando las clases dentro del componente.
+- **Texto y Enlaces**: Puedes modificar el texto y los enlaces, como la URL de la política de cookies, para que se ajusten a tu proyecto.
