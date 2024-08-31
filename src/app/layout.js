@@ -1,9 +1,8 @@
-// app/huertourbano/page.js
-
 import React from 'react';
 import "./globals.css";
 import { ThemeProvider } from 'next-themes'; // Importar ThemeProvider para manejo de temas
 import Header from '../components/header'; // Importar el Header
+import CookieConsentModal from '../components/CookieConsentModal/CookieConsentModal'; // Importar la Modal de Cookies
 import { Montserrat } from 'next/font/google'; // Importar la fuente Montserrat
 
 // Asignamos la fuente Montserrat a una constante en el ámbito del módulo
@@ -21,6 +20,9 @@ export default function RootLayout({ children }) {
           {/* Incluimos el Header */}
           <Header />
           
+          {/* Modal de Aceptación de Cookies */}
+          <CookieConsentModal />
+
           {/* Contenido principal */}
           <main>{children}</main>
         </ThemeProvider>

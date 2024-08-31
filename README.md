@@ -1,3 +1,67 @@
+
+# Proyecto Asociación de Vecinos La Nueva Elipa
+
+Este proyecto se enmarca en el proyecto final del curso de Certificado de Profesionalidad Confección y Publicación de páginas web (IFCD0110). l objetivo principal es crear una página web funcional y moderna para la **Asociación de Vecinos La Nueva Elipa**, proporcionando una plataforma digital que refleje sus actividades, misiones y servicios a la comunidad. 
+
+## Tecnologías Utilizadas
+
+- **Next.js**: Framework de React para aplicaciones web.
+- **React**: Biblioteca de JavaScript para construir interfaces de usuario.
+- **Tailwind CSS**: Framework de utilidades para construir interfaces de usuario modernas y responsivas.
+- **PostCSS**: Herramienta para transformar estilos con plugins de JavaScript.
+- **Autoprefixer**: Plugin de PostCSS para añadir prefijos a las CSS de manera automática.
+- **Lottie**: Biblioteca para animaciones vectoriales en la web.
+- **Theme Toggles**: Librería para el manejo de temas en React.
+
+## Estructura del Proyecto
+
+El proyecto está organizado de la siguiente manera:
+
+- **`components/`**: Contiene los componentes reutilizables de la aplicación, como el `Header`.
+- **`pages/`**: Contiene las páginas de la aplicación.
+- **`public/`**: Contiene los recursos estáticos como imágenes y fuentes.
+- **`styles/`**: Contiene los archivos de estilos, incluyendo Tailwind CSS.
+- **`menuData.jsx`**: Archivo de configuración que define los menús y submenús utilizados en el `Header`.
+
+## Cómo Levantar el Proyecto
+
+1. Clonar el repositorio.
+    
+ ```bash
+ https://github.com/raul-ra/av_la_nueva_elipa.git.
+ ```
+
+2. Ejecutar `npm install` para instalar las dependencias.
+3. Ejecutar `npm run dev` para levantar el servidor de desarrollo.
+4. Acceder a `http://localhost:3000` en el navegador.
+
+```json
+{
+  "name": "asociaciondevecinoslanuevaelipa",
+  "version": "1.0.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "asociaciondevecinoslanuevaelipa",
+      "version": "1.0.0",
+      "dependencies": {
+        "@theme-toggles/react": "^4.1.0",
+        "autoprefixer": "^10.4.16",
+        "next": "^14.2.7",
+        "next-themes": "^0.3.0",
+        "postcss": "^8.4.31",
+        "prop-types": "^15.8.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-lottie": "^1.2.4",
+        "tailwindcss": "^3.4.1"
+      }
+    }
+  }
+}
+```
+
 # Header Component
 
 Este proyecto incluye un componente `Header` diseñado para funcionar tanto en dispositivos móviles como en la vista de escritorio. El header incluye un sistema de menús y submenús dinámicos que se abren mediante hover en escritorio y clic en dispositivos móviles. También cuenta con una lógica para cerrar los menús automáticamente después de 5 segundos de inactividad en escritorio.
@@ -112,41 +176,7 @@ Se usa `useState` y `useEffect` para determinar si el dispositivo es móvil o de
 
 ### Tiempo de Espera para Cerrar Menús
 
-En la versión de escritorio, se implementa un temporizador (mediante `setTimeout`) que espera unos 200 milisegundos antes de cerrar los menús para evitar cierres inesperados mientras el usuario está navegando por los menús.
-
-## Interacción entre Archivos
-
-- **`menuData.jsx`**: Define la estructura de los menús y submenús que se van a renderizar.
-- **`index.jsx`**: Usa los datos de `menuData.jsx` para renderizar dinámicamente los menús y submenús tanto en la vista móvil como en la de escritorio. Aquí también se implementa toda la lógica para la interacción del usuario con el menú.
-
-## Personalización
-
-Si deseas agregar, eliminar o modificar menús y submenús, simplemente actualiza el archivo `menuData.jsx` con la nueva estructura de menús. El `Header` renderizará los cambios automáticamente en la interfaz de usuario.
-
-## Ejemplo de Uso
-
-Para usar el `Header`, simplemente importa el componente en cualquier página de tu aplicación React/Next.js y colócalo donde desees que aparezca en la interfaz:
-
-```jsx
-import Header from './components/Header';
-
-function App() {
-    return (
-        <div>
-            <Header />
-            {/* El resto de tu aplicación */}
-        </div>
-    );
-}
-
-export default App;
-```
-
-## Consideraciones
-
-1. **Tiempo de Inactividad**: El menú de escritorio se cierra automáticamente después de un breve periodo de inactividad si el ratón no está interactuando con él.
-2. **Responsividad**: El componente está completamente optimizado para ser responsivo, adaptándose automáticamente al ancho de la pantalla.
-3. **Accesibilidad**: Cada enlace y botón dentro del menú y submenús puede ser navegable mediante teclado, facilitando la accesibilidad.git log --merges
+En la versión de escritorio, se implementa un temporizador (mediante `setTimeout`) que espera unos 200 milisegundos antes de cerrar los menús para evitar cierres inesperados, garantizando una experiencia de usuario fluida.
 
 
 # Componente UnderConstruction
