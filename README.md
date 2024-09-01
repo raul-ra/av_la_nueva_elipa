@@ -384,3 +384,104 @@ Puedes personalizar los estilos y el contenido de la modal ajustando las clases 
 
 - **Estilos**: Los estilos están basados en Tailwind CSS, lo que facilita su personalización cambiando las clases dentro del componente.
 - **Texto y Enlaces**: Puedes modificar el texto y los enlaces, como la URL de la política de cookies, para que se ajusten a tu proyecto.
+
+# Footer Component
+
+Este proyecto incluye un componente `Footer` diseñado para proporcionar la información de contacto, enlaces legales y accesos a redes sociales de la **Asociación Vecinal La Nueva Elipa**. El footer está optimizado tanto para dispositivos móviles como para escritorio.
+
+## Funcionamiento General
+
+### Estructura
+
+El `Footer` está estructurado en tres partes principales:
+
+1. **Logos**: Se muestran los logos de la asociación.
+2. **Información de Contacto**: Se proporciona la dirección, correo electrónico y teléfono de la asociación con enlaces interactivos.
+3. **Redes Sociales**: Enlaces a las redes sociales de la asociación.
+
+### Funcionamiento de los Enlaces
+
+- **Dirección**: El enlace de la dirección está configurado para abrir Google Maps. En dispositivos móviles, al hacer clic en la dirección, se abrirá la aplicación de Google Maps.
+- **Correo Electrónico**: El enlace de correo electrónico utiliza el protocolo `mailto:`. En dispositivos móviles, esto abrirá la aplicación de correo predeterminada del usuario.
+- **Teléfono**: El enlace de teléfono utiliza el protocolo `tel:`. Al hacer clic en el número de teléfono en dispositivos móviles, se abrirá la aplicación de llamadas.
+- **WhatsApp**: El enlace de WhatsApp abre una conversación directa con el número de la asociación en la aplicación de WhatsApp.
+
+- **Dirección**:
+  ```jsx
+  <a
+      href="https://maps.google.com/?q=Santa+Felicidad,+29,+Madrid,+28017"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:underline text-gray-600"
+  >
+      Santa Felicidad, 29, Madrid, 28017
+  </a>
+  ```
+
+Este enlace abrirá Google Maps directamente cuando se accede desde un dispositivo móvil.
+
+- **Correo Electrónico**:
+
+```jsx
+<a href="mailto:nuevaelipa@gmail.com" className="hover:underline text-gray-600">
+    nuevaelipa@gmail.com
+</a>
+```
+
+Al hacer clic en este enlace, se abrirá la aplicación de correo electrónico predeterminada del usuario.
+
+- **Teléfono**:
+```jsx
+<a href="tel:+34722233425" className="hover:underline text-gray-600">
+    +34 722 233 425
+</a>
+```
+Este enlace está diseñado para abrir la aplicación de llamadas en dispositivos móviles.
+
+
+### Implementación
+
+El componente `Footer` está implementado utilizando React y Tailwind CSS para estilos rápidos y responsivos. Aquí se detallan algunas de las implementaciones clave:
+
+
+### Optimización de Estilos en CSS
+
+Se realizaron ajustes en el archivo `globals.css` para mejorar la presentación y la responsividad del `Footer`. Los cambios incluyen:
+
+- **Sombra en la Parte Superior del Footer**: Se agregó una sombra superior para separar visualmente el footer del resto del contenido.
+
+```css
+.shadow-footer-top {
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
+```
+- **Alineación y Centrado del Contenido**: Se ajustó la alineación de los textos y elementos dentro del footer para que se centren en su contenedor, pero el contenido como la información de contacto se mantiene alineado a la izquierda en dispositivos móviles.
+- **Medias Queries**: Se implementaron `media queries` para asegurar que el diseño del footer se adapte correctamente a diferentes tamaños de pantalla, asegurando que los elementos se dispongan en una sola columna en dispositivos móviles.
+  
+```css
+/* Ajustes específicos para el contenido de contacto en vista móvil */
+@media (max-width: 768px) {
+  footer .flex.items-center {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+```
+
+## Créditos
+El footer también incluye un enlace para el crédito del sitio, que muestra un ícono y un enlace a la página del creador.
+
+```jsx
+<div className="mt-2 text-center text-sm text-gray-600">
+    Sitio creado y diseñado por 
+    <a href="#" className="hover:underline">
+        <Image
+            src="/logos/{RR}icon.svg"
+            alt="Logo del Creador"
+            width={24}
+            height={24}
+            className="inline-block ml-2"
+        />
+    </a>
+```
