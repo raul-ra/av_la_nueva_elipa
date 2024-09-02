@@ -484,7 +484,7 @@ Puedes personalizar los estilos y el contenido de la modal ajustando las clases 
 - **Estilos**: Los estilos están basados en Tailwind CSS, lo que facilita su personalización cambiando las clases dentro del componente.
 - **Texto y Enlaces**: Puedes modificar el texto y los enlaces, como la URL de la política de cookies, para que se ajusten a tu proyecto.
 
-# Footer Component
+# Footer 
 
 Este proyecto incluye un componente `Footer` diseñado para proporcionar la información de contacto, enlaces legales y accesos a redes sociales de la **Asociación Vecinal La Nueva Elipa**. El footer está optimizado tanto para dispositivos móviles como para escritorio.
 
