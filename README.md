@@ -1,66 +1,165 @@
-
 # Proyecto Asociación de Vecinos La Nueva Elipa
 
-Este proyecto se enmarca en el proyecto final del curso de Certificado de Profesionalidad Confección y Publicación de páginas web (IFCD0110). l objetivo principal es crear una página web funcional y moderna para la **Asociación de Vecinos La Nueva Elipa**, proporcionando una plataforma digital que refleje sus actividades, misiones y servicios a la comunidad. 
+Este proyecto es parte del curso de Certificado de Profesionalidad Confección y Publicación de Páginas Web (IFCD0110). El objetivo principal es crear una página web funcional y moderna para la **Asociación de Vecinos La Nueva Elipa**, proporcionando una plataforma digital que refleje sus actividades, misiones y servicios a la comunidad.
 
 ## Tecnologías Utilizadas
 
-- **Next.js**: Framework de React para aplicaciones web.
-- **React**: Biblioteca de JavaScript para construir interfaces de usuario.
-- **Tailwind CSS**: Framework de utilidades para construir interfaces de usuario modernas y responsivas.
-- **PostCSS**: Herramienta para transformar estilos con plugins de JavaScript.
-- **Autoprefixer**: Plugin de PostCSS para añadir prefijos a las CSS de manera automática.
-- **Lottie**: Biblioteca para animaciones vectoriales en la web.
-- **Theme Toggles**: Librería para el manejo de temas en React.
+### Node.js
+Node.js es un entorno de ejecución de JavaScript que permite ejecutar código JavaScript en el lado del servidor. Es conocido por su eficiencia y escalabilidad, lo que lo convierte en una excelente opción para aplicaciones web modernas.  
+**Ventajas:**
+- Rápido rendimiento gracias a su motor V8.
+- Gran comunidad y ecosistema de módulos.
+- Asíncrono y orientado a eventos.
+
+### npm (Node Package Manager)
+npm es el gestor de paquetes de Node.js. Permite instalar y gestionar las dependencias necesarias para el desarrollo del proyecto, facilitando la integración de bibliotecas y herramientas adicionales.  
+**Ventajas:**
+- Gestión sencilla de dependencias.
+- Amplio repositorio de paquetes y módulos.
+- Integración directa con Node.js.
+
+### Next.js
+Next.js es un framework de React que permite crear aplicaciones web con renderizado del lado del servidor (SSR) y generación de sitios estáticos (SSG). Facilita el desarrollo de aplicaciones React con enrutado automático y optimizaciones de rendimiento.  
+**Ventajas:**
+- Renderizado híbrido (SSR y SSG).
+- Enrutado basado en el sistema de archivos.
+- Optimización automática de imágenes y código.
+
+### Tailwind CSS
+Tailwind CSS es un framework CSS que proporciona utilidades predefinidas para construir interfaces de usuario modernas y responsivas de manera rápida.  
+**Ventajas:**
+- Diseño altamente personalizable.
+- Enfoque utilitario para escribir CSS.
+- Fácil de aprender y usar con una curva de aprendizaje rápida.
 
 ## Estructura del Proyecto
 
 El proyecto está organizado de la siguiente manera:
 
-- **`components/`**: Contiene los componentes reutilizables de la aplicación, como el `Header`.
-- **`pages/`**: Contiene las páginas de la aplicación.
-- **`public/`**: Contiene los recursos estáticos como imágenes y fuentes.
-- **`styles/`**: Contiene los archivos de estilos, incluyendo Tailwind CSS.
-- **`menuData.jsx`**: Archivo de configuración que define los menús y submenús utilizados en el `Header`.
+- **`src/app/`**: Contiene las páginas de la aplicación y se utiliza para el enrutamiento. Cada subcarpeta dentro de `app/` representa una ruta en la aplicación, y cada archivo `page.js` dentro de estas subcarpetas define la página correspondiente.
+    - Por ejemplo, `src/app/avisolegalidad/page.js` se convierte en la ruta `/avisolegalidad`.
+    - **`globals.css` y `layout.js`** en la carpeta `app/` proporcionan estilos globales y la estructura de diseño que se aplica a todas las páginas.
+- **`src/components/`**: Contiene los componentes reutilizables de la aplicación, como `CookieConsentModal`, `Footer`, `Header`, etc.
+    - **`footer`**: Contiene el archivo `footer.jsx` que define el componente de pie de página.
+    - **`header`**: Contiene los archivos `index.jsx` y `menuData.jsx` que definen la cabecera y la estructura de menús.
+    - **`underConstruction/`**: Contiene la página `page.jsx` que podría utilizarse para mostrar un mensaje de "En construcción".
+- **`public/`**: Contiene recursos estáticos como imágenes, iconos y otros archivos públicos.
+    - **`favicon/`**: Contiene iconos utilizados como favicon.
+    - **`images/`**: Contiene imágenes utilizadas en la página, organizadas en subcarpetas como `icons` y `logos`.
+- **Configuraciones del proyecto**:
+    - **`next.config.mjs`**: Configuración de Next.js.
+    - **`postcss.config.js` y `tailwind.config.js`**: Configuraciones para Tailwind CSS y PostCSS.
+    - **`.eslintrc.json`**: Configuración para ESLint, que asegura la calidad del código.
+
+## Instalación de Dependencias
+
+### Requisitos Previos
+
+Antes de comenzar, asegúrate de tener instalados Node.js y npm en tu sistema. Puedes verificar si están instalados ejecutando los siguientes comandos en tu terminal:
+
+```bash
+node -v
+npm -v
+```
+
+Si no tienes Node.js y npm instalados, sigue los pasos a continuación:
+
+### Instalación de Node.js y npm
+
+1. **Windows/MacOS:**
+   - Visita la [página oficial de Node.js](https://nodejs.org/) y descarga el instalador correspondiente a tu sistema operativo.
+   - Sigue las instrucciones del instalador para completar la instalación. Node.js incluye npm por defecto.
+
+2. **Linux:**
+   - En distribuciones basadas en Debian/Ubuntu, ejecuta:
+   
+     ```bash
+     sudo apt update
+     sudo apt install nodejs npm
+     ```
+
+   - En distribuciones basadas en Red Hat/Fedora, ejecuta:
+
+     ```bash
+     sudo dnf install nodejs npm
+     ```
+
+### Instalación de Next.js y Tailwind CSS
+
+1. **Instalar Next.js**:
+   - Ejecuta el siguiente comando en la raíz de tu proyecto para instalar Next.js:
+   
+     ```bash
+     npm install next react react-dom
+     ```
+
+2. **Instalar Tailwind CSS**:
+   - Ejecuta el siguiente comando para instalar Tailwind CSS junto con sus dependencias:
+
+     ```bash
+     npm install -D tailwindcss postcss autoprefixer
+     npx tailwindcss init -p
+     ```
+
+3. **Configurar Tailwind CSS**:
+   - En el archivo `tailwind.config.js`, configura los paths para tus archivos:
+
+     ```javascript
+     module.exports = {
+       content: [
+         './src/app/**/*.{js,ts,jsx,tsx}',
+         './src/components/**/*.{js,ts,jsx,tsx}',
+       ],
+       theme: {
+         extend: {},
+       },
+       plugins: [],
+     }
+     ```
+
+   - En tu archivo `./src/app/globals.css`, añade las siguientes líneas:
+
+     ```css
+     @tailwind base;
+     @tailwind components;
+     @tailwind utilities;
+     ```
 
 ## Cómo Levantar el Proyecto
 
-1. Clonar el repositorio.
-    
- ```bash
- https://github.com/raul-ra/av_la_nueva_elipa.git.
- ```
+1. **Clonar el repositorio**:
 
-2. Ejecutar `npm install` para instalar las dependencias.
-3. Ejecutar `npm run dev` para levantar el servidor de desarrollo.
-4. Acceder a `http://localhost:3000` en el navegador.
+   ```bash
+   git clone https://github.com/raul-ra/av_la_nueva_elipa.git
+   ```
 
-```json
-{
-  "name": "asociaciondevecinoslanuevaelipa",
-  "version": "1.0.0",
-  "lockfileVersion": 3,
-  "requires": true,
-  "packages": {
-    "": {
-      "name": "asociaciondevecinoslanuevaelipa",
-      "version": "1.0.0",
-      "dependencies": {
-        "@theme-toggles/react": "^4.1.0",
-        "autoprefixer": "^10.4.16",
-        "next": "^14.2.7",
-        "next-themes": "^0.3.0",
-        "postcss": "^8.4.31",
-        "prop-types": "^15.8.1",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-lottie": "^1.2.4",
-        "tailwindcss": "^3.4.1"
-      }
-    }
-  }
-}
-```
+2. **Navegar al directorio del proyecto**:
+
+   ```bash
+   cd av_la_nueva_elipa
+   ```
+
+3. **Instalar las dependencias**:
+
+   ```bash
+   npm install
+   ```
+
+4. **Levantar el servidor de desarrollo**:
+
+   ```bash
+   npm run dev
+   ```
+
+   Esto iniciará el servidor en modo desarrollo. Puedes acceder a la aplicación en tu navegador en `http://localhost:3000`.
+
+## Enrutamiento en Next.js
+
+En Next.js, utilizando la carpeta `app/`, las rutas se definen según la estructura de carpetas y archivos dentro de esta. Aquí te explico cómo se enrutan las páginas en base a la estructura del proyecto:
+
+- **Ruta raíz (`/`)**: Corresponde al archivo `src/app/page.js`.
+- **Ruta para "Aviso Legalidad" (`/avisolegalidad`)**: Corresponde a `src/app/avisolegalidad/page.js`.
+- **Rutas adicionales**: Cada subcarpeta dentro de `src/app/` con un archivo `page.js` define una nueva ruta. Por ejemplo, `src/app/historiadelasociacion/page.js` se mapeará a `/historiadelasociacion`.
 
 # Header Component
 
