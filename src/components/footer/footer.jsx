@@ -109,15 +109,15 @@ const Footer = () => {
 
                 {/* Enlaces Legales */}
                 <div className="mt-8 text-center text-sm text-gray-600">
-                    <a href="/aviso-legal" className="hover:underline text-gray-600">
+                    <a href="/avisolegal" className="hover:underline text-gray-600">
                         Aviso Legal
                     </a>
                     <span className="mx-2">|</span>
-                    <a href="/politica-cookies" className="hover:underline text-gray-600">
+                    <a href="/politicadecookies" className="hover:underline text-gray-600">
                         Política de Cookies
                     </a>
                     <span className="mx-2">|</span>
-                    <a href="/politica-privacidad" className="hover:underline text-gray-600">
+                    <a href="/politicadeprivacidad" className="hover:underline text-gray-600">
                         Política de Privacidad
                     </a>
                 </div>

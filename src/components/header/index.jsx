@@ -104,11 +104,10 @@ const Header = () => {
                     </Link>
                     <Link href="/" onClick={closeMenu}>
                         <Image
-                            src={isMenuOpen ? "/logos/avLaNuevaElipaShortBlack.svg" : "/logos/logoAvLaNuevaElipaBlack.svg"}
+                            src="/logos/avLaNuevaElipaShortBlack.svg"
                             alt="Logo Av La Nueva Elipa"
-                            width={isMenuOpen ? 100 : 500}
+                            width= {125}
                             height={60}
-                            className="transition-transform duration-500 ease-in-out"
                         />
                     </Link>
                 </div>
