@@ -22,7 +22,6 @@ const Footer = () => {
                                 alt="Logo Av La Nueva Elipa"
                                 width={130}
                                 height={60}
-                                className="ease-in-out"
                             />
                         </div>
                     </div>

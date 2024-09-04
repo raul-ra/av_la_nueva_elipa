@@ -36,6 +36,20 @@ main {
   flex-direction: column;
 }
 
+/* Estilo del header */
+
+@font-face {
+  font-family: 'Avallon Caps';
+  src:  url('/fonts/AvallonAllCaps.woff2') format('woff2'),
+        url('/fonts/AvallonAllCaps.woff') format('woff'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
+.avallon-header {
+  font-family: 'Avallon Caps', sans-serif;
+}
+
 /* Sombra superior del footer */
 .shadow-footer-top {
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
