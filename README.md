@@ -584,3 +584,142 @@ El footer también incluye un enlace para el crédito del sitio, que muestra un 
         />
     </a>
 ```
+# Hazte Socio
+
+Este proyecto incluye un formulario diseñado para que los usuarios puedan hacerse socios de la **Asociación Vecinal La Nueva Elipa**. El formulario recoge los datos personales del usuario y valida la información antes de ser enviada a través del servicio de **Formspree**. También cuenta con un sistema para evitar inyecciones XSS.
+
+## Funcionamiento General
+
+### Estructura
+
+El formulario de "Hazte Socio" está estructurado en varias secciones principales:
+
+1. **Datos Personales**: Campos para el nombre, apellidos, correo electrónico, teléfono y dirección del usuario.
+2. **Colaboración**: Un campo donde el usuario puede expresar sus intereses y cómo le gustaría participar.
+3. **Opción de Hacerse Socio/a**: Pregunta para determinar si el usuario desea hacerse socio y la forma de pago.
+4. **Modal de Confirmación**: Una modal que aparece al enviar correctamente el formulario, mostrando un mensaje de éxito.
+
+### Validaciones
+
+El formulario implementa validaciones básicas para garantizar que los campos requeridos sean completados correctamente antes de enviar la información.
+
+- **Nombre**: El campo nombre es obligatorio.
+- **Apellidos**: El campo apellidos es obligatorio.
+- **Correo Electrónico**: Se utiliza una expresión regular (`emailPattern`) para validar que el formato del correo sea correcto.
+- **Teléfono**: Se utiliza una expresión regular (`phonePattern`) para validar que el teléfono tenga entre 9 y 10 dígitos.
+- **Dirección**: El campo dirección es obligatorio.
+
+Las validaciones solo se muestran al usuario si intenta enviar el formulario sin cumplir con los requisitos. Los mensajes de error se muestran en color rojo mediante la clase `text-red-500` de Tailwind CSS.
+
+### Función para Limpiar el Input y Evitar Inyecciones XSS
+
+Para prevenir inyecciones XSS (Cross-Site Scripting), se utiliza una función de sanitización (`sanitizeInput`). Esta función reemplaza los caracteres peligrosos como `<`, `>`, `"`, `'`, `&` y `/` en los inputs del formulario.
+
+```js
+function sanitizeInput(input) {
+    return input.replace(/[<>"'&/]/g, ""); // Elimina caracteres peligrosos para XSS
+}
+```
+### Modal de Confirmación
+Cuando el formulario se envía correctamente, se muestra una modal que notifica al usuario que la información ha sido enviada con éxito. La modal incluye un botón de "Aceptar" con el mismo estilo que el botón de enviar. Al hacer clic en el botón, la modal se cierra y el formulario se envía a Formspree.
+
+```js
+{isModalOpen && (
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
+            <h2 className="text-2xl font-bold text-green-600 mb-4">¡Enhorabuena!</h2>
+            <p className="mb-4">Tu formulario ha sido enviado con éxito. Gracias por unirte a la Asociación del Barrio. ¡Nos pondremos en contacto contigo muy pronto!</p>
+            <button
+                onClick={handleAccept}
+                className="bg-[#60c6b4] text-white rounded-lg px-4 py-2 mt-4 transition transform active:scale-95 active:bg-[#4da594] focus:outline-none"
+            >
+                Aceptar
+            </button>
+        </div>
+    </div>
+)}
+```
+
+### Envío del Formulario a través de Formspree
+El formulario está configurado para ser enviado a través de Formspree, un servicio que permite enviar formularios HTML sin necesidad de un servidor backend propio.
+
+Implementación de Formspree
+En el atributo action del formulario se especifica la URL proporcionada por Formspree para manejar los envíos:
+
+
+```js
+<form action="https://formspree.io/f/xnnayzan" method="POST" onSubmit={handleSubmit}>
+
+```
+Al hacer clic en el botón "Enviar", si todas las validaciones son correctas, se muestra la modal y, tras su confirmación, se realiza el envío del formulario a la URL de Formspree.
+
+### Configuración de Formspree
+
+Para configurar **Formspree** y enviar un formulario de HTML o React sin necesidad de un backend propio, sigue estos pasos:
+
+## 1. Crear una cuenta en Formspree
+
+1. Ve a [Formspree](https://formspree.io/) y crea una cuenta.
+2. Inicia sesión en tu cuenta y crea un nuevo formulario.
+
+## 2. Obtener la URL de Formspree
+
+1. Una vez que hayas creado un formulario en el panel de control de Formspree, te proporcionarán una URL única para tu formulario.
+2. La URL tendrá un formato similar a:
+```js
+https://formspree.io/f/tu-identificador
+```
+## 3. Configurar el Formulario en HTML o React
+
+En el formulario de HTML o Next, utiliza el atributo `action` para establecer la URL que obtuviste de Formspree. El formulario se enviará a esta URL cuando el usuario haga clic en "Enviar".
+
+### Ejemplo en HTML:
+
+```html
+<form action="https://formspree.io/f/tu-identificador" method="POST">
+ <label for="name">Nombre:</label>
+ <input type="text" name="name" id="name" required>
+ 
+ <label for="email">Correo Electrónico:</label>
+ <input type="email" name="email" id="email" required>
+ 
+ <button type="submit">Enviar</button>
+</form>
+
+```next
+<form action="https://formspree.io/f/tu-identificador" method="POST">
+    <input type="text" name="name" placeholder="Nombre" required />
+    <input type="email" name="email" placeholder="Correo Electrónico" required />
+    <button type="submit">Enviar</button>
+</form>
+```
+## 4. Personalizar Campos del Formulario
+Puedes añadir más campos a tu formulario si es necesario, como campos de teléfono, dirección, etc. Todos los campos con el atributo name serán enviados a Formspree.
+
+Ejemplo con más campos:
+```next
+<form action="https://formspree.io/f/tu-identificador" method="POST">
+    <input type="text" name="name" placeholder="Nombre" required />
+    <input type="email" name="email" placeholder="Correo Electrónico" required />
+    <input type="tel" name="phone" placeholder="Teléfono" required />
+    <textarea name="message" placeholder="Mensaje" required></textarea>
+    <button type="submit">Enviar</button>
+</form>
+```
+## 5. Prueba del Formulario
+Abre tu formulario en el navegador.
+Completa los campos y haz clic en "Enviar".
+Recibirás un correo electrónico en la dirección que configuraste en tu cuenta de Formspree cuando alguien complete el formulario.
+
+### Envío del formulario a través de Formspree sin redirección
+
+Para mejorar la experiencia del usuario y dar una sensación más profesional a la página, se ha implementado el envío del formulario de manera asíncrona utilizando `fetch`. Este enfoque evita la redirección a la página de confirmación de Formspree, permitiendo que el usuario se quede en la misma página tras enviar el formulario.
+
+El flujo es el siguiente:
+
+1. **Validación de campos**: Antes de enviar el formulario, se realiza una validación de los datos ingresados por el usuario para asegurarse de que están completos y en el formato adecuado.
+2. **Envío asíncrono con fetch**: Si los datos son válidos, se envían de manera asíncrona a Formspree utilizando `fetch`, enviando una solicitud `POST` con los datos del formulario.
+3. **Sin redirección**: A diferencia del comportamiento estándar de Formspree, el usuario no es redirigido a la página de confirmación. En su lugar, permanece en la misma página.
+4. **Modal de confirmación**: Al enviarse correctamente el formulario, se muestra una modal con un mensaje positivo que confirma que el formulario ha sido enviado con éxito, dando una sensación más fluida y profesional al usuario.
+
+Esta implementación mejora la experiencia del usuario al evitar cambios abruptos de página, haciendo que el proceso sea más fluido y menos disruptivo.
