@@ -723,3 +723,101 @@ El flujo es el siguiente:
 4. **Modal de confirmación**: Al enviarse correctamente el formulario, se muestra una modal con un mensaje positivo que confirma que el formulario ha sido enviado con éxito, dando una sensación más fluida y profesional al usuario.
 
 Esta implementación mejora la experiencia del usuario al evitar cambios abruptos de página, haciendo que el proceso sea más fluido y menos disruptivo.
+
+# Componentes CTA
+
+Una CTA (Call To Action) es un elemento clave en cualquier página web o aplicación cuyo propósito es atraer la atención de los usuarios hacia una acción específica. Esto puede ser desde un registro, una suscripción, una compra, hasta la participación en una comunidad. En este proyecto, el propósito de las CTA es alentar a los usuarios a unirse o colaborar con la Asociación Vecinal La Nueva Elipa.
+
+El componente ctaSocio está diseñado para cumplir este objetivo de forma eficiente, ofreciendo una experiencia de usuario amigable y segura mediante validaciones de datos y medidas contra ataques comunes.
+
+## CTA Socio
+
+### ¿Qué es el componente CTA Socio?
+El componente ctaSocio es una modal que se abre cuando el usuario hace clic en un botón de llamada a la acción que dice "¿Quieres colaborar con la Asociación del Barrio?". Esta CTA está implementada como una ventana modal que contiene un formulario para que los usuarios se puedan afiliar o hacer donaciones.
+
+### implementación
+
+1. Botón CTA: Al final de la página o donde sea necesario, hay un botón que permite abrir la modal. Este botón está estilizado y tiene una animación de escala para hacer que la experiencia sea más atractiva.
+
+2. Modal: Al hacer clic en el botón CTA, se abre una ventana modal centrada en la pantalla. Esta modal tiene un botón de cierre en la esquina superior derecha en forma de "X". La modal contiene un formulario que permite a los usuarios afiliarse o hacer una donación.
+
+3. Formulario dentro de la Modal:
+
+- Campos de Entrada: Nombre, apellidos, correo electrónico, teléfono, dirección, intereses.
+- Radio buttons: Permite al usuario indicar si desea hacerse socio o no. Si selecciona sí, aparecen opciones de pago para realizar la afiliación.
+- Validaciones: Los campos del formulario son validados para garantizar que se ingresen datos correctos antes de permitir el envío del formulario.
+- Medidas de seguridad: Los campos del formulario son sanitizados para evitar inyecciones de código (XSS).
+
+4. Modal de Éxito: Si los datos ingresados son correctos y el formulario se envía con éxito a Formspree, aparece una segunda modal que notifica al usuario que la información ha sido enviada con éxito.
+
+### ¿Cómo funciona el componente?
+
+El componente ctaSocio se encarga de lo siguiente:
+
+1. Renderizado del Botón CTA: Inicialmente, solo se muestra un botón que abre la modal cuando se hace clic en él.
+
+2. Apertura y cierre de la Modal:
+
+- La modal se abre al hacer clic en el botón CTA.
+- La modal se puede cerrar mediante el botón "X" en la esquina superior derecha o después de que se envíe el formulario con éxito.
+
+3. Formulario dentro de la Modal: El formulario contiene varios campos y opciones. Cada vez que el usuario interactúa con el formulario:
+
+- Los valores ingresados son sanitizados mediante la función sanitizeInput, que elimina caracteres peligrosos como <, >, ", ' y / para evitar ataques XSS.
+- Si los datos no son válidos (por ejemplo, falta un campo obligatorio o el correo no tiene un formato correcto), los mensajes de error en color rojo indican al usuario qué necesita corregir.
+
+4. Validaciones:
+
+- Las validaciones incluyen verificar que todos los campos obligatorios se hayan completado (nombre, apellidos, correo, teléfono, dirección).
+- Los mensajes de error se muestran en color rojo debajo de cada campo que tiene un error.
+
+5. Seguridad del formulario: Se han implementado las siguientes medidas de seguridad:
+
+- Sanitización de entradas: Se utiliza una función para limpiar los datos ingresados y evitar la inyección de scripts maliciosos.
+- Validación estricta del formulario: Cada campo tiene reglas de validación específicas para asegurar que los datos sean correctos antes de permitir el envío.
+
+6. Envío del formulario:
+
+-Cuando el formulario es validado correctamente, se envía utilizando la API de Formspree a través de un fetch POST.
+-Dependiendo de la opción seleccionada por el usuario, interests indicará si la suscripción es una afiliación o una donación, con la finalidad de personalizar el mensaje que se envía a Formspree.
+-Una vez enviado el formulario, se deshabilita para evitar envíos duplicados y se muestra una modal de éxito.
+
+### ¿Cómo se exporta el componente?
+
+El componente ctaSocio se exporta como un componente funcional de React. Se puede importar y usar en cualquier página donde sea necesario un botón de CTA para invitar a los usuarios a unirse a la asociación o hacer una donación.
+
+```next
+import CTASocio from './components/ctaSocio/ctaSocio';
+
+function HomePage() {
+  return (
+    <div>
+      {/* Otros componentes de la página */}
+      <CTASocio />
+    </div>
+  );
+}
+
+export default HomePage;
+```
+### Validaciones
+
+Cada campo del formulario tiene validaciones específicas:
+
+- Nombre y Apellidos: No pueden estar vacíos.
+- Correo electrónico: Se valida mediante una expresión regular para garantizar que el formato sea correcto.
+- Teléfono: Debe ser un número de 9 o 10 dígitos.
+- Dirección: Campo obligatorio.
+- Opción de Afiliación o Donación: El usuario debe seleccionar si desea afiliarse o realizar una donación.
+
+### Medidas de seguridad
+
+1. Sanitización de los datos:
+- Se utiliza la función sanitizeInput para evitar que los usuarios puedan insertar código malicioso en los campos de texto.
+2. Validación de campos:
+- Las validaciones evitan que se envíen datos incompletos o incorrectos.
+3. Prevención de envíos duplicados:
+- Si el formulario se envía correctamente, el nombre o apellidos ya enviados no pueden ser enviados de nuevo para evitar saturaciones y spam.
+
+## Envío del formulario a Formspree
+El formulario se envía a través de Formspree utilizando la API de fetch. Dependiendo de las elecciones del usuario, el contenido del campo interests se ajusta automáticamente para indicar si se trata de una afiliación o una donación. Formspree maneja la entrega de la información enviada por el formulario.

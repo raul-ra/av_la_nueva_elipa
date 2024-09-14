@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import CTASocio from '../components/ctaSocio/ctaSocio';  // Importamos el componente CTASocio
 
 export default function Home() {
   return (
@@ -111,6 +112,11 @@ export default function Home() {
             dificultando la disponibilidad de alquileres en el barrio.
           </p>
         </div>
+      </div>
+
+      {/* Botón de CTA al final de la página */}
+      <div className="text-center mt-8">
+        <CTASocio /> {/* Componente de llamada a la acción */}
       </div>
     </div>
   );

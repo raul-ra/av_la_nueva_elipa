@@ -178,9 +178,9 @@ export default function HazteSocio() {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className={`border p-2 w-full ${isSubmitted && errors.name ? 'border-red-500' : ''}`}
+                            className={`border p-2 w-full ${isSubmitted && errors.name ? 'border-red' : ''}`}
                         />
-                        {isSubmitted && errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                        {isSubmitted && errors.name && <p className="text-red text-sm">{errors.name}</p>}
                     </div>
                     <div>
                         <label htmlFor="lastname" className="block mb-2">Apellidos:</label>
@@ -190,9 +190,9 @@ export default function HazteSocio() {
                             name="lastname"
                             value={formData.lastname}
                             onChange={handleChange}
-                            className={`border p-2 w-full ${isSubmitted && errors.lastname ? 'border-red-500' : ''}`}
+                            className={`border p-2 w-full ${isSubmitted && errors.lastname ? 'border-red' : ''}`}
                         />
-                        {isSubmitted && errors.lastname && <p className="text-red-500 text-sm">{errors.lastname}</p>}
+                        {isSubmitted && errors.lastname && <p className="text-red text-sm">{errors.lastname}</p>}
                     </div>
                 </div>
 
@@ -206,9 +206,9 @@ export default function HazteSocio() {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className={`border p-2 w-full ${isSubmitted && errors.email ? 'border-red-500' : ''}`}
+                            className={`border p-2 w-full ${isSubmitted && errors.email ? 'border-red' : ''}`}
                         />
-                        {isSubmitted && errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                        {isSubmitted && errors.email && <p className="text-red text-sm">{errors.email}</p>}
                     </div>
                     <div>
                         <label htmlFor="phone" className="block mb-2">Teléfono:</label>
@@ -218,9 +218,9 @@ export default function HazteSocio() {
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            className={`border p-2 w-full ${isSubmitted && errors.phone ? 'border-red-500' : ''}`}
+                            className={`border p-2 w-full ${isSubmitted && errors.phone ? 'border-red' : ''}`}
                         />
-                        {isSubmitted && errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                        {isSubmitted && errors.phone && <p className="text-red text-sm">{errors.phone}</p>}
                     </div>
                 </div>
 
@@ -233,9 +233,9 @@ export default function HazteSocio() {
                         name="address"
                         value={formData.address}
                         onChange={handleChange}
-                        className={`border p-2 w-full ${isSubmitted && errors.address ? 'border-red-500' : ''}`}
+                        className={`border p-2 w-full ${isSubmitted && errors.address ? 'border-red' : ''}`}
                     />
-                    {isSubmitted && errors.address && <p className="text-red-500 text-sm">{errors.address}</p>}
+                    {isSubmitted && errors.address && <p className="text-red text-sm">{errors.address}</p>}
                 </div>
 
                 {/* Cuarta Fila: Intereses */}
