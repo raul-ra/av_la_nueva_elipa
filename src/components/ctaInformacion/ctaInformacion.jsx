@@ -1,59 +1,44 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import Image from 'next/image';
 
 // Función para limpiar el input y evitar inyecciones XSS
 function sanitizeInput(input) {
     return input.replace(/[<>"'&/]/g, ""); // Elimina caracteres peligrosos para XSS
 }
 
-const CTASocio = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para abrir o cerrar la modal
-    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // Estado para abrir la modal de éxito
-    const [isAlertModalOpen, setIsAlertModalOpen] = useState(false); // Estado para abrir la modal de alerta
-    const [isMember, setIsMember] = useState(null);
+const CTAInformacion = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // Modal para éxito
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false); // Modal para error
     const [formData, setFormData] = useState({
         name: '',
         lastname: '',
         email: '',
         phone: '',
         address: '',
-        interests: '',
-        payment: '',
+        interests: 'Mediación',  // Valor por defecto
+        consultation: ''
     });
-
     const [errors, setErrors] = useState({});
-    const [isSubmitted, setIsSubmitted] = useState(false); // Estado para saber si se ha hecho submit
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [submittedNames, setSubmittedNames] = useState([]); // Guardar nombres ya enviados
 
-    useEffect(() => {
-        // Resetear el formulario y estados cuando la modal se cierra
-        if (!isModalOpen) {
-            setIsMember(null);
-            setFormData({
-                name: '',
-                lastname: '',
-                email: '',
-                phone: '',
-                address: '',
-                interests: '',
-                payment: '',
-            });
-            setErrors({});
-            setIsSubmitted(false);
-        }
-    }, [isModalOpen]);
-
-    const handleMembershipChange = (e) => {
-        const isMember = e.target.value === "yes";
-        setIsMember(isMember);
-
-        // Actualizar el campo "interests" en función de si es miembro o no
-        setFormData({
-            ...formData,
-            payment: '',
-            interests: isMember ? 'Afiliación/Suscripción' : 'Posible Donación'
-        });
-    };
+    // Opciones de información
+    const infoOptions = [
+        { title: 'Mediación' },
+        { title: 'Cursos y Talleres' },
+        { title: 'Huerto Urbano' },
+        { title: 'Grupo Scout Atreyu' },
+        { title: "Campamento de Verano 'El Escondite'" },
+        { title: 'Grupo de Consumo Ecológico' },
+        { title: 'Grupo Felicidad' },
+        { title: 'Club de Ajedrez' },
+        { title: 'Elipa Rock' },
+        { title: 'Cross Salvar el Pinar' },
+        { title: 'Carrera Popular' }
+    ];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -90,52 +75,52 @@ const CTASocio = () => {
             tempErrors.address = "La dirección es obligatoria";
             valid = false;
         }
-
-        if (isMember && !formData.payment) {
-            tempErrors.payment = "Debes seleccionar una forma de pago";
+        if (!formData.consultation) {
+            tempErrors.consultation = "La consulta es obligatoria";
             valid = false;
         }
-
-        // Verificar si el nombre y apellido ya fueron enviados antes
-        const sentForms = JSON.parse(localStorage.getItem('sentForms')) || [];
-        if (sentForms.some(item => item.name === formData.name && item.lastname === formData.lastname)) {
-            setIsAlertModalOpen(true); // Abrir modal de alerta
-            valid = false;
-        }
-
         setErrors(tempErrors);
         return valid;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitted(true);  // Establecer que se ha intentado enviar
+        setIsSubmitted(true);
 
         if (validate()) {
-            try {
-                const response = await fetch("https://formspree.io/f/xnnayzan", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
-                });
+            // Verificar si el nombre y apellidos ya se enviaron antes
+            const nameExists = submittedNames.some(
+                entry => entry.name === formData.name && entry.lastname === formData.lastname
+            );
 
-                if (response.ok) {
-                    // Guardar el nombre y apellido en localStorage para futuras validaciones
-                    const sentForms = JSON.parse(localStorage.getItem('sentForms')) || [];
-                    sentForms.push({ name: formData.name, lastname: formData.lastname });
-                    localStorage.setItem('sentForms', JSON.stringify(sentForms));
+            if (nameExists) {
+                setIsErrorModalOpen(true); // Mostrar modal de error
+            } else {
+                try {
+                    // El envío del formulario incluye el campo "interests"
+                    const response = await fetch("https://formspree.io/f/xnnayzan", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            ...formData,
+                            type: 'Solicitud de Información',
+                            interests: formData.interests  // Campo interests enviado
+                        })
+                    });
 
-                    // Mostrar modal de éxito si el formulario se envía correctamente
-                    setIsSuccessModalOpen(true);
-                    setIsModalOpen(false); // Cerrar la modal principal
-                } else {
-                    console.error("Error al enviar el formulario");
+                    if (response.ok) {
+                        setSubmittedNames([...submittedNames, { name: formData.name, lastname: formData.lastname }]);
+                        setIsModalOpen(false); // Cerrar modal de formulario
+                        setIsSuccessModalOpen(true); // Mostrar modal de éxito
+                    } else {
+                        console.error("Error al enviar el formulario");
+                    }
+                } catch (error) {
+                    console.error("Error en la conexión con Formspree:", error);
                 }
-            } catch (error) {
-                console.error("Error en la conexión con Formspree:", error);
             }
         }
     };
@@ -149,29 +134,26 @@ const CTASocio = () => {
     };
 
     const closeSuccessModal = () => {
-        setIsSuccessModalOpen(false);
+        setIsSuccessModalOpen(false); // Cerrar modal de éxito
     };
 
-    const closeAlertModal = () => {
-        setIsAlertModalOpen(false); // Cerrar modal de alerta
+    const closeErrorModal = () => {
+        setIsErrorModalOpen(false); // Cerrar modal de error
     };
 
     return (
         <div>
-            {/* CTA Button */}
             <button
                 className="bg-[#60c6b4] text-white rounded-lg px-4 py-2 transition transform hover:scale-105 focus:outline-none"
                 onClick={openModal}
             >
-                ¿Quieres colaborar con la Asociación del Barrio?
+                Necesito más información
             </button>
 
-            {/* Modal */}
+            {/* Modal de formulario */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full relative">
-
-                        {/* Botón de cierre en forma de "X" */}
                         <span
                             className="absolute top-4 right-4 text-2xl cursor-pointer"
                             onClick={closeModal}
@@ -179,10 +161,8 @@ const CTASocio = () => {
                             &times;
                         </span>
 
-                        <h2 className="text-2xl font-bold mb-4">Únete a Nuestra Asociación</h2>
-
                         <form onSubmit={handleSubmit}>
-                            {/* Primera Fila: Nombre y Apellidos */}
+                            {/* Campos Comunes */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label htmlFor="name" className="block mb-2">Nombre:</label>
@@ -210,7 +190,6 @@ const CTASocio = () => {
                                 </div>
                             </div>
 
-                            {/* Segunda Fila: Correo y Teléfono */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label htmlFor="email" className="block mb-2">Correo Electrónico:</label>
@@ -238,7 +217,6 @@ const CTASocio = () => {
                                 </div>
                             </div>
 
-                            {/* Tercera Fila: Dirección */}
                             <div className="mb-4">
                                 <label htmlFor="address" className="block mb-2">Dirección:</label>
                                 <input
@@ -252,38 +230,63 @@ const CTASocio = () => {
                                 {isSubmitted && errors.address && <p className="text-red text-sm">{errors.address}</p>}
                             </div>
 
-                            {/* ¿Deseas hacerte socio/a por tan solo 25€ al año? */}
-                            <h3 className="text-xl font-bold mb-4 text-center">¿Deseas hacerte socio/a por tan solo 25€ al año?</h3>
-
-                            {/* ¿Deseas hacerte socio/a? */}
-                            <label className="flex justify-center mb-2">¿Deseas hacerte socio/a?</label>
-                            <div className="flex justify-center mb-4">
-                                <input type="radio" name="membership" value="yes" onChange={handleMembershipChange} className="mr-2" /> Sí
-                                <input type="radio" name="membership" value="no" onChange={handleMembershipChange} className="ml-6 mr-2" /> No
+                            {/* Dropdown de Información */}
+                            <div className="mb-4">
+                                <label htmlFor="interests" className="block mb-2">Solicito Información Sobre:</label>
+                                <select
+                                    id="interests"
+                                    name="interests"
+                                    value={formData.interests}
+                                    onChange={handleChange}
+                                    className="border p-2 w-full"
+                                >
+                                    {infoOptions.map((option) => (
+                                        <option key={option.title} value={option.title}>{option.title}</option>
+                                    ))}
+                                </select>
                             </div>
 
-                            {/* Mostrar si marca "Sí" */}
-                            {isMember && (
-                                <div className="mb-4">
-                                    <label className="flex justify-center mb-2">Forma de Pago:</label>
-                                    <div>
-                                        <input type="radio" name="payment" value="association" onChange={handleChange} className="mr-2" /> Asociación vecinal La Nueva Elipa
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="payment" value="transfer" onChange={handleChange} className="mr-2" /> Transferencia a ES92 2100 2869 3313 0054 9940 con concepto "nombre+apellido+cuota2024"
-                                    </div>
-                                    {isSubmitted && errors.payment && <p className="text-red text-sm">{errors.payment}</p>}
-                                </div>
-                            )}
+                            {/* Campo de consulta */}
+                            <div className="mb-4">
+                                <label htmlFor="consultation" className="block mb-2">Consulta (máx 500 caracteres):</label>
+                                <textarea
+                                    id="consultation"
+                                    name="consultation"
+                                    value={formData.consultation}
+                                    onChange={handleChange}
+                                    maxLength="500"
+                                    className={`border p-2 w-full ${isSubmitted && errors.consultation ? 'border-red' : ''}`}
+                                    rows="4"
+                                />
+                                {isSubmitted && errors.consultation && <p className="text-red text-sm">{errors.consultation}</p>}
+                            </div>
 
-                            {/* Mostrar si marca "No" */}
-                            {!isMember && isMember !== null && (
-                                <div className="mb-4">
-                                    <p className="mb-4">Si quieres colaborar con una donación, puedes hacer una transferencia a ES92 2100 2869 3313 0054 9940.</p>
+                            {/* Texto de contacto adicional */}
+                            <div className="mb-4">
+                                <p>También puedes escribirnos a <a href="mailto:nuevaelipa@gmail.com" className="text-teal">nuevaelipa@gmail.com</a>.</p>
+                                <p>Si lo prefieres, puedes contactarnos a través de nuestras redes sociales:</p>
+                                <div className="flex justify-center space-x-4 mt-2">
+                                    <a href="https://www.facebook.com/LaNuevaElipa/?locale=es_ES"
+                                        className="hover:underline"
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        <Image src="/icons/facebook.svg" alt="Facebook" width={24} height={24} />
+                                    </a>
+                                    <a href="https://www.instagram.com/asociacion_la_nueva_elipa/?hl=es"
+                                        className="hover:underline"
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        <Image src="/icons/instagram.svg" alt="Instagram" width={24} height={24} />
+                                    </a>
+                                    <a href="https://wa.me/34722233425"
+                                        className="hover:underline"
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        <Image src="/icons/whatsapp.svg" alt="WhatsApp" width={24} height={24} />
+                                    </a>
                                 </div>
-                            )}
+                            </div>
 
-                            {/* Botón de Enviar */}
                             <button
                                 type="submit"
                                 className="bg-[#60c6b4] text-white rounded-lg px-4 py-2 mt-4 block mx-auto transition transform active:scale-95 active:bg-[#4da594] focus:outline-none"
@@ -300,7 +303,7 @@ const CTASocio = () => {
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
                         <h2 className="text-2xl font-bold text-green-600 mb-4">¡Enhorabuena!</h2>
-                        <p className="mb-4">Tu formulario ha sido enviado con éxito. Gracias por unirte a la Asociación del Barrio. ¡Nos pondremos en contacto contigo muy pronto!</p>
+                        <p className="mb-4">Tu formulario ha sido enviado con éxito. Gracias por ponerte en contacto con la Asociación del Barrio. ¡Nos pondremos en contacto contigo muy pronto!</p>
                         <button
                             onClick={closeSuccessModal}
                             className="bg-[#60c6b4] text-white rounded-lg px-4 py-2 mt-4 transition transform active:scale-95 active:bg-[#4da594] focus:outline-none"
@@ -311,15 +314,15 @@ const CTASocio = () => {
                 </div>
             )}
 
-            {/* Modal de alerta */}
-            {isAlertModalOpen && (
+            {/* Modal de error */}
+            {isErrorModalOpen && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
                         <h2 className="text-2xl font-bold text-red-600 mb-4">¡Atención!</h2>
                         <p className="mb-4">Ya se ha enviado una solicitud con este nombre y apellidos.</p>
                         <button
-                            onClick={closeAlertModal}
-                            className="bg-red hover:bg-red-700 text-white rounded-lg px-4 py-2 mt-4 transition transform active:scale-95 focus:outline-none"
+                            onClick={closeErrorModal}
+                            className="bg-[#FF0000] text-white rounded-lg px-4 py-2 mt-4 transition transform active:scale-95 focus:outline-none"
                         >
                             Aceptar
                         </button>
@@ -330,4 +333,4 @@ const CTASocio = () => {
     );
 };
 
-export default CTASocio;
+export default CTAInformacion;

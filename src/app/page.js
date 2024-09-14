@@ -2,6 +2,7 @@
 
 import React from 'react';
 import CTASocio from '../components/ctaSocio/ctaSocio';  // Importamos el componente CTASocio
+import CTAInformacion from '../components/ctaInformacion/ctaInformacion';  // Importamos el componente CTAInformacion
 
 export default function Home() {
   return (
@@ -114,9 +115,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Botón de CTA al final de la página */}
-      <div className="text-center mt-8">
+       {/* Botones CTA al final de la página */}
+      <div className="flex justify-between mt-8">
         <CTASocio /> {/* Componente de llamada a la acción */}
+        <CTAInformacion /> {/* Componente de solicitud de información */}
       </div>
     </div>
   );
