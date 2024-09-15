@@ -6,7 +6,7 @@ import CTAInformacion from '../../components/ctaInformacion/ctaInformacion';  //
 
 export default function CursosTalleres() {
     return (
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 mb-12">
             {/* Banner con título estilizado */}
             <h1 className="text-center font-bold my-6">
                 <span className="text-4xl md:text-5xl">La Elipa Activa y Colectiva</span>

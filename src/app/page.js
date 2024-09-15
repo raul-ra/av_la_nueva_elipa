@@ -34,14 +34,21 @@ export default function Home() {
         y cultural, la sostenibilidad y la mejora de los espacios verdes.
       </p>
 
+       {/* Componente CTAInformacion centrado */}
+      <div className="flex justify-center mb-12">
+        <CTAInformacion />  {/* Componente de solicitud de información */}
+      </div>
+
       <h2 className="text-2xl font-bold my-4 text-center">¿Qué Reclamamos para La Elipa?</h2>
       
-      <p className="mb-6">
+      <p className="mb-6 text-center">
         Destacamos las principales demandas que buscamos llevar a cabo para mejorar nuestro barrio. Estas peticiones
         reflejan las necesidades reales de La Elipa y queremos trabajar conjuntamente con nuestros vecinos y las autoridades para
         hacerlas realidad.
       </p>
 
+
+      {/* Cuadrícula de reclamaciones */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="p-4">
           <img src="/icons/Centro de Salud.svg" alt="Centro de Salud" className="h-24 w-24 mb-2 mx-auto object-contain" />
@@ -115,10 +122,9 @@ export default function Home() {
         </div>
       </div>
 
-       {/* Botones CTA al final de la página */}
-      <div className="flex justify-between mt-8">
+      {/* Botones CTA al final de la página */}
+      <div className="flex justify-center mb-12">
         <CTASocio /> {/* Componente de llamada a la acción */}
-        <CTAInformacion /> {/* Componente de solicitud de información */}
       </div>
     </div>
   );
