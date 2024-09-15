@@ -862,3 +862,70 @@ function HomePage() {
 }
 
 export default HomePage;
+```
+
+# Componente CardWorkshop
+
+El componente `CardWorkshop` está diseñado para mostrar información sobre talleres en un formato de tarjeta visualmente atractivo. Cada tarjeta contiene una imagen representativa del taller, un título, una descripción y un botón para interactuar (por ejemplo, para solicitar más información).
+
+## Características
+
+- **Diseño responsive**: Las tarjetas se muestran en un formato de cuadrícula que se adapta al tamaño de la pantalla. En pantallas grandes se muestran 5 tarjetas por fila, y en dispositivos móviles se muestran 2 tarjetas por fila.
+- **Título centrado**: Cada tarjeta presenta un título centrado para mejorar la legibilidad y la consistencia visual.
+- **Descripción justificada**: La descripción está justificada, asegurando que el texto se vea limpio y alineado.
+- **Botón de información alineado**: El botón "Quiero más información" está alineado en todas las tarjetas a la misma altura para un aspecto uniforme.
+
+## Funcionamiento
+
+### Estructura
+
+El componente recibe una lista de talleres, cada uno con las siguientes propiedades:
+- `title`: El nombre del taller.
+- `description`: Una breve descripción del taller.
+- `image`: La URL de la imagen que representa visualmente el taller.
+
+### Ejemplo de datos de talleres
+
+```javascript
+const workshops = [
+  {
+    title: 'Yoga',
+    description: 'El yoga es una disciplina que une cuerpo, mente y alma. Mejora la flexibilidad, fortalece huesos y músculos, alivia dolores posturales y reduce la ansiedad y el estrés.',
+    image: '/images/Yoga.png',
+  },
+  {
+    title: 'Flamenco',
+    description: 'Clases personalizadas que combinan música, baile y expresión corporal. Se aprende el compás, zapateado, braceo y coreografía.',
+    image: '/images/Flamenco.png',
+  },
+  // Otros talleres...
+];
+```
+### Uso
+
+1. Importa el componente CardWorkshop en la página o componente donde desees usarlo.
+
+```javascript
+import CardWorkshop from './components/cardWorkshop/CardWorkshop';
+```
+
+2. Pasa el array de talleres (workshops) como propiedad al componente CardWorkshop para renderizar las tarjetas.
+
+```javascript
+export default function CursosTalleres() {
+  return (
+    <div className="container mx-auto px-4">
+      <h1 className="text-center font-bold my-6">
+        <span className="text-4xl md:text-5xl">Talleres</span>
+      </h1>
+      <CardWorkshop workshops={workshops} />
+    </div>
+  );
+}
+```
+
+### Diseño responsive
+
+- En pantallas con más de 1024px de ancho, se mostrarán 5 tarjetas por fila.
+- En pantallas más pequeñas, como en dispositivos móviles, el diseño se ajusta para mostrar 2 tarjetas por fila.
+  
