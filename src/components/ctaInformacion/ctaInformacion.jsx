@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 // Función para limpiar el input y evitar inyecciones XSS
@@ -39,6 +39,15 @@ const CTAInformacion = () => {
         { title: 'Cross Salvar el Pinar' },
         { title: 'Carrera Popular' }
     ];
+
+    // Bloquear el scroll del fondo cuando el modal está abierto
+    useEffect(() => {
+        if (isModalOpen || isSuccessModalOpen || isErrorModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isModalOpen, isSuccessModalOpen, isErrorModalOpen]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -115,6 +124,18 @@ const CTAInformacion = () => {
                         setSubmittedNames([...submittedNames, { name: formData.name, lastname: formData.lastname }]);
                         setIsModalOpen(false); // Cerrar modal de formulario
                         setIsSuccessModalOpen(true); // Mostrar modal de éxito
+                        
+                        // Limpiar el formulario
+                        setFormData({
+                            name: '',
+                            lastname: '',
+                            email: '',
+                            phone: '',
+                            address: '',
+                            interests: 'Mediación',  // Valor por defecto
+                            consultation: ''
+                        });
+                        
                     } else {
                         console.error("Error al enviar el formulario");
                     }
@@ -144,15 +165,15 @@ const CTAInformacion = () => {
     return (
         <div>
             <button
-                className="bg-[#60c6b4] text-white rounded-lg px-4 py-2 transition transform hover:scale-105 focus:outline-none"
+                className="bg-teal text-white rounded-lg px-4 py-2 transition transform hover:scale-105 focus:outline-none"
                 onClick={openModal}
             >
-                Necesito más información
+                Quiero más información
             </button>
 
             {/* Modal de formulario */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full relative">
                         <span
                             className="absolute top-4 right-4 text-2xl cursor-pointer"
@@ -256,7 +277,7 @@ const CTAInformacion = () => {
                                     onChange={handleChange}
                                     maxLength="500"
                                     className={`border p-2 w-full ${isSubmitted && errors.consultation ? 'border-red' : ''}`}
-                                    rows="4"
+                                    rows="2"  // Ajustar tamaño para hacer más pequeño el contenedor
                                 />
                                 {isSubmitted && errors.consultation && <p className="text-red text-sm">{errors.consultation}</p>}
                             </div>
@@ -289,7 +310,7 @@ const CTAInformacion = () => {
 
                             <button
                                 type="submit"
-                                className="bg-[#60c6b4] text-white rounded-lg px-4 py-2 mt-4 block mx-auto transition transform active:scale-95 active:bg-[#4da594] focus:outline-none"
+                                className="bg-teal text-white rounded-lg px-4 py-2 mt-4 block mx-auto transition transform active:scale-95 active:bg-[#4da594] focus:outline-none"
                             >
                                 Enviar
                             </button>
@@ -300,13 +321,13 @@ const CTAInformacion = () => {
 
             {/* Modal de éxito */}
             {isSuccessModalOpen && (
-                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
                         <h2 className="text-2xl font-bold text-green-600 mb-4">¡Enhorabuena!</h2>
                         <p className="mb-4">Tu formulario ha sido enviado con éxito. Gracias por ponerte en contacto con la Asociación del Barrio. ¡Nos pondremos en contacto contigo muy pronto!</p>
                         <button
                             onClick={closeSuccessModal}
-                            className="bg-[#60c6b4] text-white rounded-lg px-4 py-2 mt-4 transition transform active:scale-95 active:bg-[#4da594] focus:outline-none"
+                            className="bg-teal text-white rounded-lg px-4 py-2 mt-4 transition transform active:scale-95 active:bg-[#4da594] focus:outline-none"
                         >
                             Aceptar
                         </button>
@@ -316,13 +337,13 @@ const CTAInformacion = () => {
 
             {/* Modal de error */}
             {isErrorModalOpen && (
-                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
                         <h2 className="text-2xl font-bold text-red-600 mb-4">¡Atención!</h2>
                         <p className="mb-4">Ya se ha enviado una solicitud con este nombre y apellidos.</p>
                         <button
                             onClick={closeErrorModal}
-                            className="bg-[#FF0000] text-white rounded-lg px-4 py-2 mt-4 transition transform active:scale-95 focus:outline-none"
+                            className="bg-red text-white rounded-lg px-4 py-2 mt-4 transition transform active:scale-95 focus:outline-none"
                         >
                             Aceptar
                         </button>
