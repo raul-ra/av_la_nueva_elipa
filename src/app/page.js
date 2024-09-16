@@ -122,7 +122,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Botones CTA al final de la página */}
+      {/* Botones CTA */}
       <div className="flex justify-center mb-12">
         <CTASocio /> {/* Componente de llamada a la acción */}
       </div>

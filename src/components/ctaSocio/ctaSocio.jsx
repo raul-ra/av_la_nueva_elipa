@@ -163,7 +163,7 @@ const CTASocio = () => {
                 className="bg-[#60c6b4] text-white rounded-lg px-4 py-2 transition transform hover:scale-105 focus:outline-none"
                 onClick={openModal}
             >
-                ¿Quieres colaborar con la Asociación del Barrio?
+                ¿Quieres colaborar con Nosotr@s?
             </button>
 
             {/* Modal */}
