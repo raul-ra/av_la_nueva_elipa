@@ -154,10 +154,59 @@ En Next.js, utilizando la carpeta `app/`, las rutas se definen según la estruct
 - **Ruta raíz (`/`)**: Corresponde al archivo `src/app/page.js`.
 - **Ruta para "Aviso Legalidad" (`/avisolegalidad`)**: Corresponde a `src/app/avisolegalidad/page.js`.
 - **Rutas adicionales**: Cada subcarpeta dentro de `src/app/` con un archivo `page.js` define una nueva ruta. Por ejemplo, `src/app/historiadelasociacion/page.js` se mapeará a `/historiadelasociacion`.
+- 
 
 # Header Component
 
 Este proyecto incluye un componente `Header` diseñado para funcionar tanto en dispositivos móviles como en la vista de escritorio. El header incluye un sistema de menús y submenús dinámicos que se abren mediante hover en escritorio y clic en dispositivos móviles. También cuenta con una lógica para cerrar los menús automáticamente después de 5 segundos de inactividad en escritorio.
+
+## Ramas de Git
+
+En este proyecto, la rama principal es **main**, pero dado que el desarrollo sigue activo, aún no se ha hecho un merge a esta rama. Cada una de las ramas se ha creado con el objetivo de desarrollar o modificar diferentes componentes del proyecto. Las correcciones urgentes se deben gestionar a través de ramas **hotfix**, asegurando que cualquier cambio crítico se maneje de manera independiente de las funcionalidades en desarrollo.
+
+### Ramas Principales:
+- **main**: La rama principal. No se ha mergeado aún debido a que el proyecto sigue en desarrollo activo.
+- **dev**: Es la rama de desarrollo principal desde donde se hacen los merges al resto de ramas para realizar cambios y ajustes.
+- **cursosytalleres**: Rama dedicada al componente de los cursos y talleres.
+- **ctacomponents**: Rama para los componentes del **Call To Action**.
+- **hartesocio**: Rama enfocada en el desarrollo del área de socios de la asociación.
+- **footer**: Rama donde se ha trabajado en el pie de página del sitio.
+
+## Proceso de Deploy en Netlify
+
+El proyecto utiliza **Netlify** para el despliegue continuo desde la rama **dev**. A continuación se explica el proceso completo para hacer el deploy desde esta rama:
+
+### 1. Configuración de Continuous Deployment
+El sitio está vinculado a un repositorio de GitHub, lo que permite un despliegue continuo a través de Netlify cada vez que se actualiza la rama **dev**.
+
+### 2. Configuración del entorno de construcción
+- **Framework**: Next.js
+- **Base directory**: `/`
+- **Build command**: `npm run build`
+- **Publish directory**: `.next`
+- **Functions directory**: `netlify/functions`
+
+### 3. Despliegue Automático
+- La rama de producción está configurada como **dev**, lo que significa que cualquier cambio hecho en esta rama desencadena automáticamente un proceso de construcción y despliegue en Netlify.
+- Las ramas de desarrollo adicionales están disponibles para realizar pruebas, pero cualquier cambio en **dev** es el que activa el despliegue.
+
+### 4. Node.js y dependencias
+- El proyecto usa Node.js en su versión 18.x para garantizar la compatibilidad con las librerías y dependencias que el proyecto necesita.
+
+### 5. Previsualización y colaboraciones
+- Netlify permite a los colaboradores del proyecto revisar los cambios en un entorno de previsualización antes de que estos se lleven a la producción.
+- Se pueden realizar comentarios, crear issues o anotar capturas directamente desde el entorno de previsualización para facilitar la colaboración.
+
+### 6. Configuración de hooks y triggers
+- El despliegue puede ser activado manualmente a través de **build hooks**, lo cual facilita la posibilidad de forzar un despliegue sin necesidad de realizar un commit en el repositorio de Git.
+
+### 7. Mantenimiento del entorno
+- El entorno de producción se mantiene automáticamente activo con los últimos cambios de la rama **dev**, mientras que los despliegues antiguos son eliminados después de 90 días para optimizar el uso de los recursos.
+
+### Consideraciones adicionales
+- Las modificaciones mayores o las correcciones urgentes se deben hacer en ramas **hotfix**, y luego integrarse a **dev** para asegurar que los cambios sean efectivos en el despliegue.
+  
+Este flujo de trabajo garantiza que el desarrollo del sitio web para la Asociación de Vecinos La Nueva Elipa sea seguro y eficiente, asegurando que las mejoras y correcciones se implementen de manera controlada mientras el proyecto sigue en desarrollo activo.
 
 ## Funcionamiento General
 
