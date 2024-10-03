@@ -154,7 +154,7 @@ En Next.js, utilizando la carpeta `app/`, las rutas se definen según la estruct
 - **Ruta raíz (`/`)**: Corresponde al archivo `src/app/page.js`.
 - **Ruta para "Aviso Legalidad" (`/avisolegalidad`)**: Corresponde a `src/app/avisolegalidad/page.js`.
 - **Rutas adicionales**: Cada subcarpeta dentro de `src/app/` con un archivo `page.js` define una nueva ruta. Por ejemplo, `src/app/historiadelasociacion/page.js` se mapeará a `/historiadelasociacion`.
-- 
+  
 
 # Header Component
 
@@ -174,7 +174,9 @@ En este proyecto, la rama principal es **main**, pero dado que el desarrollo sig
 
 ## Proceso de Deploy en Netlify
 
-El proyecto utiliza **Netlify** para el despliegue continuo desde la rama **dev**. A continuación se explica el proceso completo para hacer el deploy desde esta rama:
+El proyecto utiliza **Netlify** para el despliegue continuo desde la rama **dev**. https://avlanuevaelipa.netlify.app/
+
+A continuación se explica el proceso completo para hacer el deploy desde esta rama:
 
 ### 1. Configuración de Continuous Deployment
 El sitio está vinculado a un repositorio de GitHub, lo que permite un despliegue continuo a través de Netlify cada vez que se actualiza la rama **dev**.
@@ -211,6 +213,11 @@ Este flujo de trabajo garantiza que el desarrollo del sitio web para la Asociaci
 ## Funcionamiento General
 
 ### Estructura
+
+# Header Component
+
+El componente `Header` esta diseñado para funcionar tanto en dispositivos móviles como en la vista de escritorio. El header incluye un sistema de menús y submenús dinámicos que se abren mediante hover en escritorio y clic en dispositivos móviles. También cuenta con una lógica para cerrar los menús automáticamente después de 5 segundos de inactividad en escritorio.
+
 
 El `Header` está estructurado en dos partes principales:
 
