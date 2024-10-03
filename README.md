@@ -156,10 +156,6 @@ En Next.js, utilizando la carpeta `app/`, las rutas se definen según la estruct
 - **Rutas adicionales**: Cada subcarpeta dentro de `src/app/` con un archivo `page.js` define una nueva ruta. Por ejemplo, `src/app/historiadelasociacion/page.js` se mapeará a `/historiadelasociacion`.
   
 
-# Header Component
-
-Este proyecto incluye un componente `Header` diseñado para funcionar tanto en dispositivos móviles como en la vista de escritorio. El header incluye un sistema de menús y submenús dinámicos que se abren mediante hover en escritorio y clic en dispositivos móviles. También cuenta con una lógica para cerrar los menús automáticamente después de 5 segundos de inactividad en escritorio.
-
 ## Ramas de Git
 
 En este proyecto, la rama principal es **main**, pero dado que el desarrollo sigue activo, aún no se ha hecho un merge a esta rama. Cada una de las ramas se ha creado con el objetivo de desarrollar o modificar diferentes componentes del proyecto. Las correcciones urgentes se deben gestionar a través de ramas **hotfix**, asegurando que cualquier cambio crítico se maneje de manera independiente de las funcionalidades en desarrollo.
