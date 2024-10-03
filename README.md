@@ -78,12 +78,6 @@ Si no tienes Node.js y npm instalados, sigue los pasos a continuación:
      sudo apt install nodejs npm
      ```
 
-   - En distribuciones basadas en Red Hat/Fedora, ejecuta:
-
-     ```bash
-     sudo dnf install nodejs npm
-     ```
-
 ### Instalación de Next.js y Tailwind CSS
 
 1. **Instalar Next.js**:
