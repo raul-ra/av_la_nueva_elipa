@@ -694,7 +694,7 @@ En el atributo action del formulario se especifica la URL proporcionada por Form
 
 
 ```js
-<form action="https://formspree.io/f/xnnayzan" method="POST" onSubmit={handleSubmit}>
+<form action="https://formspree.io/f/tu-identificador" method="POST" onSubmit={handleSubmit}>
 
 ```
 Al hacer clic en el botón "Enviar", si todas las validaciones son correctas, se muestra la modal y, tras su confirmación, se realiza el envío del formulario a la URL de Formspree.
