@@ -14,21 +14,12 @@ export const menuData = [
     {
         title: 'Qué Hacemos',
         subMenu: [
-            { title: 'Mediación', link: '/mediacion' },
+            { title: 'Cerca de ti', link: '/cercadeti' },
             { title: 'Cursos y Talleres', link: '/cursosytalleres' },
             { title: 'Huerto Urbano', link: '/huertourbano' },
-            { title: 'Grupo Scout Atreyu', link: '/gruposcoutatreyu' },
-            { title: "Campamento de Verano 'El Escondite'", link: '/campamentodeverano' },
+            { title: 'Espacio Comunitario', link: '/espaciocomunitario'},
             {
-                title: 'Espacio Comunitario',
-                subMenu: [
-                    { title: 'Grupo de Consumo Ecológico', link: '/grupodeconsumoecologico' },
-                    { title: 'Grupo Felicidad', link: '/grupofelicidad' },
-                    { title: 'Club de Ajedrez', link: '/clubdeajedrez' },
-                ],
-            },
-            {
-                title: 'Dinamización Social y Cultural',
+                title: 'Construyendo Barrio',
                 subMenu: [
                     { title: 'Elipa Rock', link: '/eliparock' },
                     { title: 'Cross Salvar el Pinar', link: '/crosspinar' },

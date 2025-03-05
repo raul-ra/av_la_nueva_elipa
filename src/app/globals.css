@@ -50,6 +50,27 @@ main {
   font-family: 'Avallon Caps', sans-serif;
 }
 
+/* Personalización de Timeline.js */
+#timeline-embed {
+  width: 100%;
+  height: auto; /* Permitir que la altura se ajuste */
+  min-height: 400px; /* Puedes establecer un mínimo para pantallas más pequeñas */
+}
+
+/* Estilo responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+  #timeline-embed {
+    min-height: 300px; /* Ajustar la altura para pantallas móviles */
+  }
+
+  /* Asegurar que las flechas sean visibles y responsivas */
+  .tl-timemarker-navigation .tl-navigation-next .tl-icon,
+  .tl-timemarker-navigation .tl-navigation-previous .tl-icon {
+    font-size: 20px; /* Ajustar el tamaño de las flechas en móviles si es necesario */
+  }
+}
+
+
 /* Sombra superior del footer */
 .shadow-footer-top {
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
