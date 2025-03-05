@@ -975,3 +975,112 @@ export default function CursosTalleres() {
 - En pantallas con más de 1024px de ancho, se mostrarán 5 tarjetas por fila.
 - En pantallas más pequeñas, como en dispositivos móviles, el diseño se ajusta para mostrar 2 tarjetas por fila.
   
+  # Crear un archivo Markdown con la documentación del componente Timeline
+file_path = "/mnt/data/Timeline_Documentation.md"
+
+## Componente Timeline
+
+El componente `Timeline` está diseñado para mostrar una línea de tiempo interactiva que permite a los usuarios navegar a través de eventos históricos. Utiliza un diseño **responsive**, tarjetas con imágenes y texto, y una barra de navegación que permite moverse entre los eventos.
+
+## Características
+
+- **Diseño responsive**: Se adapta a cualquier tamaño de pantalla, ajustando el texto y la distribución de las tarjetas en dispositivos móviles y tablets.
+- **División automática de títulos**: Los títulos largos se dividen en 2 o 3 líneas dependiendo del tamaño de la pantalla para mejorar la legibilidad.
+- **Navegación fluida**: Permite desplazarse entre eventos mediante botones de navegación y una barra de tiempo interactiva.
+- **Estructura flexible**: Cada evento tiene una imagen representativa, una descripción y una fecha clara en la parte inferior.
+- **Optimización de rendimiento**: Utiliza `useEffect` y `useCallback` para manejar redimensionamientos de pantalla de manera eficiente.
+
+## Funcionamiento
+
+### Estructura
+
+El componente recibe una lista de eventos, cada uno con las siguientes propiedades:
+- `text.headline`: Título del evento.
+- `text.text`: Descripción del evento.
+- `media.url`: URL de la imagen asociada al evento.
+- `media.caption`: Descripción breve de la imagen.
+- `start_date.year`: Año en que ocurrió el evento.
+
+### Ejemplo de datos de eventos
+
+```javascript
+const timelineData = {
+  events: [
+    {
+      media: {
+        url: "/images/la_elipa_1960.jpg",
+        caption: "Los Primeros Años y la Clandestinidad"
+      },
+      start_date: {
+        year: "1960"
+      },
+      text: {
+        headline: "Años 60 y 70: Los Primeros Años y la Clandestinidad",
+        text: "La Elipa empezó a desarrollarse como un barrio obrero en las décadas de 1960 y 1970..."
+      }
+    },
+    {
+      media: {
+        url: "/images/movimiento_vecinal.jpg",
+        caption: "Movilización Vecinal"
+      },
+      start_date: {
+        year: "1977"
+      },
+      text: {
+        headline: "Legalización y Crecimiento de la Asociación",
+        text: "La Asociación de Vecinos de La Elipa fue registrada oficialmente el 21 de julio de 1977..."
+      }
+    }
+  ]
+};
+```
+
+## Uso
+
+### Importación
+
+```javascript
+import Timeline from './components/Timeline';
+```
+
+### Implementación
+
+```javascript
+export default function HistoriaDeLaElipa() {
+  return (
+    <div className="container mx-auto px-4">
+      <h1 className="text-center font-bold my-6">
+        <span className="text-4xl md:text-5xl">Historia de La Elipa</span>
+      </h1>
+      <Timeline />
+    </div>
+  );
+}
+```
+
+## Explicación de la navegación
+
+### Flechas de navegación
+
+- Permiten moverse entre eventos anteriores y siguientes.
+- Se desactivan cuando se llega al inicio o al final de la línea de tiempo.
+
+### Barra de tiempo interactiva
+
+- Muestra puntos representando los eventos.
+- Permite saltar directamente a cualquier evento haciendo clic en su marcador.
+
+### Transición fluida
+
+- Se usa `translateX` en CSS para desplazar los eventos de manera suave al cambiar de evento.
+
+## Diseño responsive
+
+- **Pantallas grandes (más de 1024px de ancho)**: Se muestran los eventos en un diseño amplio con imágenes alineadas horizontalmente.
+- **Tablets (768px - 1024px)**: Los títulos se dividen en 2 líneas para mejorar la legibilidad.
+- **Móviles (menos de 768px)**: Los títulos largos se dividen en 3 líneas para adaptarse a la pantalla y evitar desbordamientos.
+
+---
+
+Esta documentación explica de forma clara y estructurada cómo funciona el componente `Timeline`, asegurando que cualquiera que lo use en la aplicación pueda integrarlo fácilmente. 🚀
