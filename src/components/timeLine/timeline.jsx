@@ -1,78 +1,48 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import timelineData from "../../data/timelineData";
-
-const formatTitle = (title) => {
-  const words = title.split(" ");
-  const length = words.length;
-  
-  if (length > 6) {
-    if (window.innerWidth <= 640) {
-      // Móvil: 3 partes
-      return (
-        <>
-          {words.slice(0, Math.ceil(length / 3)).join(" ")} <br />
-          {words.slice(Math.ceil(length / 3), Math.ceil((2 * length) / 3)).join(" ")} <br />
-          {words.slice(Math.ceil((2 * length) / 3)).join(" ")}
-        </>
-      );
-    } else if (window.innerWidth <= 1024) {
-      // Tablet: 2 partes
-      return (
-        <>
-          {words.slice(0, Math.ceil(length / 2)).join(" ")} <br />
-          {words.slice(Math.ceil(length / 2)).join(" ")}
-        </>
-      );
-    }
-  }
-  return title;
-};
-
-const ResponsiveCard = ({ event, index }) => {
-  return (
-    <div
-      className={`
-        bg-white shadow-lg rounded-lg overflow-hidden
-        flex flex-col
-        portrait:md:flex-col       /* En vertical: imagen arriba, texto abajo */
-        landscape:md:flex-row      /* En horizontal: imagen y texto en fila */
-        ${index % 2 !== 0 ? "landscape:md:flex-row-reverse" : ""}
-      `}
-    >
-      {/* Imagen */}
-      <div className="w-full landscape:md:w-1/2 h-48 md:h-64 flex-shrink-0">
-        <img
-          src={event.media.url}
-          alt={event.media.caption}
-          className="w-full h-full object-cover"
-        />
-      </div>
-
-      {/* Contenedor del texto con ajuste responsive */}
-      <div className="w-full landscape:md:w-1/2 p-4 flex flex-col justify-center max-h-64 overflow-hidden">
-        <p 
-          className="
-            text-gray-700 
-            text-justify 
-            break-words 
-            whitespace-normal
-            m-0
-            overflow-hidden
-            text-sm md:text-base /* Ajuste de tamaño de texto responsive */
-          "
-        >
-          {event.text.text}
-        </p>
-      </div>
-    </div>
-  );
-};
 
 const Timeline = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalEvents = timelineData.events.length;
+  const [screenWidth, setScreenWidth] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setScreenWidth(window.innerWidth);
+
+      const handleResize = () => setScreenWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
+  const formatTitle = (title) => {
+    const words = title.split(" ");
+    const length = words.length;
+
+    if (length > 6) {
+      if (screenWidth && screenWidth <= 640) {
+        return (
+          <>
+            {words.slice(0, Math.ceil(length / 3)).join(" ")} <br />
+            {words.slice(Math.ceil(length / 3), Math.ceil((2 * length) / 3)).join(" ")} <br />
+            {words.slice(Math.ceil((2 * length) / 3)).join(" ")}
+          </>
+        );
+      } else if (screenWidth && screenWidth <= 1024) {
+        return (
+          <>
+            {words.slice(0, Math.ceil(length / 2)).join(" ")} <br />
+            {words.slice(Math.ceil(length / 2)).join(" ")}
+          </>
+        );
+      }
+    }
+    return title;
+  };
 
   const prevSlide = () => {
     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
@@ -123,16 +93,6 @@ const Timeline = () => {
                 <h2 className="text-2xl font-bold break-words text-wrap leading-tight">
                   {formatTitle(event.text.headline)}
                 </h2>
-              </div>
-
-              {/* Card (imagen + texto) */}
-              <ResponsiveCard event={event} index={index} />
-
-              {/* Fecha debajo de la card */}
-              <div className="text-center mt-4">
-                <span className="text-gray-500">
-                  {event.start_date.year}
-                </span>
               </div>
             </div>
           ))}
